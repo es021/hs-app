@@ -32,7 +32,7 @@ if (isProd) {
     };
 }
 //Use Career Fair Schema
-const schemaCF = require('./_server/schema/_schema_cf.js');
+const schemaCF = require('./_server/schema/_schema.js');
 
 // body parser used in post argument
 var bodyParser = require('body-parser');
