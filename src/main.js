@@ -7,12 +7,13 @@ Vue.config.productionTip = false
 import AppHeader from './components/AppHeader'
 import AppAlert from './components/AppAlert'
 import AppPopup from './components/AppPopup'
-import AppLoading from './components/AppLoading'
+import LoaderCircular from './components/LoaderCircular'
 
 Vue.component('AppHeader', AppHeader);
 Vue.component('AppPopup', AppPopup);
-Vue.component('AppLoading', AppLoading);
 Vue.component('AppAlert', AppAlert);
+Vue.component('LoaderCircular', LoaderCircular);
+
 
 // External Library
 import 'materialize-css'

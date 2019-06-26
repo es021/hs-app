@@ -1,6 +1,6 @@
 import {
   STORE_AUTH
-} from '../../config/app-config';
+} from '../../../_config/app-config';
 
 function getStoreAuth() {
   // default state if not exist
