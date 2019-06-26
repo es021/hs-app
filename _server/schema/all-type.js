@@ -1,34 +1,58 @@
 const {
   GraphQLObjectType,
-  GraphQLString,
-  GraphQLSchema,
   GraphQLList,
-  GraphQLNonNull,
-  GraphQLInt,
-  GraphQLBoolean
+  // GraphQLString,
+  // GraphQLInt,
+  // GraphQLBoolean,
+  // GraphQLNonNull,
+  // GraphQLSchema,
 } = require('graphql');
+const {
+  __
+} = require("../../_config/graphql-config");
+const DbConfig = require("../../_config/db-config");
+
+const UserType = new GraphQLObjectType({
+  name: 'User',
+  fields: () => ({
+    ...DbConfig.UserAttr,
+    // additional
+    is_active: __.Boolean,
+    is_profile_completed: __.Boolean,
+    // other type relation
+    company: {
+      type: CompanyType
+    },
+  })
+});
+
+const CompanyType = new GraphQLObjectType({
+  name: 'Company',
+  fields: () => ({
+    ...DbConfig.CompanyAttr,
+    // additional
+    vacancies_count: __.Int,
+    // other type relation
+    recruiters: {
+      type: new GraphQLList(UserType)
+    },
+  })
+});
+
+module.exports = {
+  CompanyType,
+  UserType
+};
 
 
-const GqlType = {
-  String: {
-    type: GraphQLString
-  },
-  Int: {
-    type: GraphQLInt
-  },
-  Boolean: {
-    type: GraphQLBoolean
-  },
-  StringNonNull: {
-    type: new GraphQLNonNull(GraphQLString)
-  },
-  IntNonNull: {
-    type: new GraphQLNonNull(GraphQLInt)
-  },
-  BooleanNonNull: {
-    type: new GraphQLNonNull(GraphQLBoolean)
-  },
-}
+// #############################################################################################
+// #############################################################################################
+/**
+ * 
+
+
+
+
 
 const NotificationType = new GraphQLObjectType({
   name: 'Notification',
@@ -114,179 +138,6 @@ const AvailabilityType = new GraphQLObjectType({
     prescreen: {
       type: PrescreenType
     }
-  })
-});
-
-
-const UserType = new GraphQLObjectType({
-  name: 'User',
-  fields: () => ({
-    // all roles
-    ID: {
-      type: GraphQLInt
-    },
-    user_email: {
-      type: GraphQLString
-    },
-    user_pass: {
-      type: GraphQLString
-    },
-    first_name: {
-      type: GraphQLString
-    },
-    last_name: {
-      type: GraphQLString
-    },
-    description: {
-      type: GraphQLString
-    },
-    img_url: {
-      type: GraphQLString
-    },
-    img_pos: {
-      type: GraphQLString
-    },
-    img_size: {
-      type: GraphQLString
-    },
-    feedback: {
-      type: GraphQLString
-    },
-    user_status: {
-      type: GraphQLString
-    },
-    activation_key: {
-      type: GraphQLString
-    },
-    role: {
-      type: GraphQLString
-    },
-    cf: {
-      type: new GraphQLList(GraphQLString)
-    },
-    user_registered: {
-      type: GraphQLString
-    },
-    degree_level: {
-      type: GraphQLString
-    },
-
-    //active activity
-    queues: {
-      type: new GraphQLList(QueueType)
-    },
-    session_requests: {
-      type: new GraphQLList(SessionRequestType)
-    },
-    registered_prescreens: {
-      type: new GraphQLList(PrescreenType)
-    },
-    prescreens: {
-      type: new GraphQLList(PrescreenType)
-    },
-    sessions: {
-      type: new GraphQLList(SessionType)
-    },
-    zoom_invites: {
-      type: new GraphQLList(ZoomInviteType)
-    },
-    group_sessions: {
-      type: new GraphQLList(GroupSessionType)
-    },
-    group_session_joins: {
-      type: new GraphQLList(GroupSessionJoinType)
-    },
-
-    // student listing
-    // need to provide company_id
-    booked_at: {
-      type: new GraphQLList(AvailabilityType)
-    },
-    prescreens_for_student_listing: {
-      type: new GraphQLList(PrescreenType)
-    },
-
-    // student only        
-    university: {
-      type: GraphQLString
-    },
-    phone_number: {
-      type: GraphQLString
-    },
-    graduation_month: {
-      type: GraphQLString
-    },
-    graduation_year: {
-      type: GraphQLString
-    },
-    available_month: {
-      type: GraphQLString
-    },
-    available_year: {
-      type: GraphQLString
-    },
-    sponsor: {
-      type: GraphQLString
-    },
-    cgpa: {
-      type: GraphQLString
-    },
-    study_field: {
-      type: GraphQLString
-    },
-    major: {
-      type: GraphQLString
-    },
-    minor: {
-      type: GraphQLString
-    },
-
-    gender: {
-      type: GraphQLString
-    },
-
-    mas_state: {
-      type: GraphQLString
-    },
-    mas_postcode: {
-      type: GraphQLString
-    },
-    relocate: {
-      type: GraphQLString
-    },
-    study_place: {
-      type: GraphQLString
-    },
-    looking_for: {
-      type: GraphQLString
-    },
-
-    doc_links: {
-      type: new GraphQLList(DocLinkType)
-    },
-    skills: {
-      type: new GraphQLList(SkillType)
-    },
-
-    // rec only
-    rec_company: {
-      type: GraphQLInt
-    },
-    rec_position: {
-      type: GraphQLString
-    },
-    company: {
-      type: CompanyType
-    },
-
-    // indicator
-    is_active: {
-      type: GraphQLBoolean
-    },
-    is_profile_completed: {
-      type: GraphQLBoolean
-    }, // student only
-
   })
 });
 
@@ -729,120 +580,6 @@ const PrescreenType = new GraphQLObjectType({
   })
 });
 
-const CompanyType = new GraphQLObjectType({
-  name: 'Company',
-  fields: () => ({
-    active_queues: {
-      type: new GraphQLList(QueueType)
-    },
-    active_queues_count: {
-      type: GraphQLInt
-    },
-
-    active_prescreens: {
-      type: new GraphQLList(PrescreenType)
-    },
-    active_prescreens_count: {
-      type: GraphQLInt
-    },
-
-    vacancies: {
-      type: new GraphQLList(VacancyType)
-    },
-    vacancies_count: {
-      type: GraphQLInt
-    },
-
-    active_sessions: {
-      type: new GraphQLList(SessionType)
-    },
-    pending_requests: {
-      type: new GraphQLList(SessionRequestType)
-    },
-
-    recruiters: {
-      type: new GraphQLList(UserType)
-    },
-    doc_links: {
-      type: new GraphQLList(DocLinkType)
-    },
-    ID: {
-      type: GraphQLInt
-    },
-    cf: {
-      type: new GraphQLList(GraphQLString)
-    },
-    name: {
-      type: GraphQLString
-    },
-    tagline: {
-      type: GraphQLString
-    },
-    description: {
-      type: GraphQLString
-    },
-    more_info: {
-      type: GraphQLString
-    },
-
-    img_url: {
-      type: GraphQLString
-    },
-    img_size: {
-      type: GraphQLString
-    },
-    img_position: {
-      type: GraphQLString
-    },
-    img_pos: {
-      type: GraphQLString
-    },
-
-    banner_url: {
-      type: GraphQLString
-    },
-    banner_size: {
-      type: GraphQLString
-    },
-    banner_position: {
-      type: GraphQLString
-    },
-
-    message_drop_resume: {
-      type: GraphQLString
-    },
-
-    status: {
-      type: GraphQLString
-    },
-    rec_privacy: {
-      type: GraphQLInt
-    },
-    sponsor_only: {
-      type: GraphQLInt
-    },
-    type: {
-      type: GraphQLInt
-    },
-    accept_prescreen: {
-      type: GraphQLInt
-    },
-    group_url: {
-      type: GraphQLString
-    },
-
-    priviledge: {
-      type: GraphQLString
-    },
-
-    created_at: {
-      type: GraphQLString
-    },
-    updated_at: {
-      type: GraphQLString
-    }
-  })
-});
 
 // const CFType = new GraphQLObjectType({
 //     name: 'CF',
@@ -1427,42 +1164,4 @@ const HallGalleryType = new GraphQLObjectType({
     }
   })
 });
-
-
-module.exports = {
-  GqlType,
-  QsPopupType,
-  QsPopupAnswerType,
-  UserType,
-  ForumCommentType,
-  ForumReplyType,
-  ZoomInviteType,
-  CompanyType,
-  QueueType,
-  MessageType,
-  PrescreenType,
-  DocLinkType,
-  VacancyType,
-  SkillType,
-  SessionType,
-  DashboardType,
-  SessionNoteType,
-  SessionRatingType,
-  PasswordResetType,
-  ResumeDropType,
-  MetaType,
-  AuditoriumType,
-  SessionRequestType,
-  LogType,
-  FeedbackQsType,
-  SupportSessionType,
-  AvailabilityType,
-  StudentListingType,
-  GroupSessionType,
-  GroupSessionJoinType,
-  CfsType,
-  EntityRemovedType,
-  NotificationType,
-  HallGalleryType
-  //, CFType
-};
+ */

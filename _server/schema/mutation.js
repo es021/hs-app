@@ -1,6 +1,8 @@
 const DB = require('../model/_DB.js');
 const Type = require('./all-type.js');
-const GqlType = Type.GqlType;
+const {
+  __
+} = require("../../_config/graphql-config");
 const DbConfig = require('../../_config/db-config');
 const graphqlFields = require('graphql-fields');
 const {
@@ -25,45 +27,11 @@ var fields = {};
 fields["edit_user"] = {
   type: Type.UserType,
   args: {
-    ID: GqlType.IntNonNull,
-    user_email: GqlType.String,
-    user_pass: GqlType.String,
-    first_name: GqlType.String,
-    last_name: GqlType.String,
-    description: GqlType.String,
-    role: GqlType.String,
-    img_url: GqlType.String,
-    img_pos: GqlType.String,
-    img_size: GqlType.String,
-    feedback: GqlType.String,
-    user_status: GqlType.String,
-    activation_key: GqlType.String,
-    skip_delete_cf: GqlType.Boolean,
-
-    // student only
-    university: GqlType.String,
-    phone_number: GqlType.String,
-    graduation_month: GqlType.String,
-    graduation_year: GqlType.String,
-    available_month: GqlType.String,
-    available_year: GqlType.String,
-    sponsor: GqlType.String,
-    cgpa: GqlType.String,
-    study_field: GqlType.String,
-    degree_level: GqlType.String,
-    major: GqlType.String,
-    minor: GqlType.String,
-    mas_state: GqlType.String,
-    mas_postcode: GqlType.String,
-    relocate: GqlType.String,
-    study_place: GqlType.String,
-    looking_for: GqlType.String,
-    gender: GqlType.String,
-
-    // rec only
-    company_id: GqlType.Int,
-    rec_position: GqlType.String,
-    rec_company: GqlType.String,
+    ...DbConfig.UserAttr,
+    // additional
+    skip_delete_cf: __.Boolean,
+    // ovverride non null
+    ID: __.IntNonNull,
   },
   resolve(parentValue, arg, context, info) {
     var ID = arg.ID;

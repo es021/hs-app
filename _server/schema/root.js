@@ -1,6 +1,8 @@
 const graphqlFields = require('graphql-fields');
 const Type = require('./all-type.js');
-const GqlType = Type.GqlType;
+const {
+  __
+} = require("../../_config/graphql-config");
 const {
   GraphQLObjectType,
   GraphQLList,
@@ -24,8 +26,8 @@ var fields = {};
 fields["user"] = {
   type: Type.UserType,
   args: {
-    ID: GqlType.Int,
-    user_email: GqlType.String,
+    ID: __.Int,
+    user_email: __.String,
   },
   resolve(pVal, arg, context, info) {
     return UserModel.user(arg, graphqlFields(info));
@@ -35,15 +37,14 @@ fields["user"] = {
 fields["users"] = {
   type: new GraphQLList(Type.UserType),
   args: {
-    role: GqlType.String,
-    page: GqlType.Int,
-    offset: GqlType.Int,
-    order_by: GqlType.String,
-
+    role: __.String,
+    page: __.Int,
+    offset: __.Int,
+    order_by: __.String,
     //search query
-    search_user: GqlType.String,
-    search_degree: GqlType.String,
-    search_university: GqlType.String,
+    search_user: __.String,
+    search_degree: __.String,
+    search_university: __.String,
   },
   resolve(pVal, arg, context, info) {
     return UserModel.users(arg, graphqlFields(info));
@@ -53,7 +54,7 @@ fields["users"] = {
 fields["company"] = {
   type: Type.CompanyType,
   args: {
-    ID: GqlType.IntNonNull
+    ID: __.IntNonNull
   },
   resolve(pVal, arg, context, info) {
     return CompanyModel.company(arg.ID, graphqlFields(info));
@@ -62,12 +63,12 @@ fields["company"] = {
 fields["companies"] = {
   type: new GraphQLList(Type.CompanyType),
   args: {
-    type: GqlType.Int,
-    cf: GqlType.String,
-    accept_prescreen: GqlType.Int,
-    include_sponsor: GqlType.Int,
-    ignore_type: GqlType.String,
-    order_by: GqlType.String,
+    type: __.Int,
+    cf: __.String,
+    accept_prescreen: __.Int,
+    include_sponsor: __.Int,
+    ignore_type: __.String,
+    order_by: __.String,
   },
   resolve(pVal, arg, context, info) {
     return CompanyModel.companies(arg, graphqlFields(info));
