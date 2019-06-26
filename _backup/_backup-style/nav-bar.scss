@@ -1,0 +1,72 @@
+$ORANGE:#f5871f;
+$DEFAULT-BACK: rgba(102, 102, 102, 1);
+
+.jpn-nav-bar {
+  display: flex;
+  margin-bottom: 7px;
+  justify-content: space-between;
+  border-bottom: solid 4px $ORANGE;
+
+  .jnv-item {
+    // general
+    padding: 7px;
+    font-size: 13px;
+    border-radius: 3px 3px 0px 0px;
+    margin-right: 3px;
+    border: $DEFAULT-BACK solid 1px;
+    cursor: pointer; // color for normal
+    color: white;
+    background-color: $DEFAULT-BACK;
+  }
+
+  .jnv-item:last-of-type {
+    margin-right: 0;
+  }
+
+  .jnv-item.jnv-right {
+    margin-right: 0px;
+    margin-left: 3px;
+  }
+
+  .jnv-item.jnv-right:first-of-type {
+    margin-left: 0;
+  }
+
+  .jnv-item:hover {
+    background-color: black;
+  }
+
+  .jnv-item.active:hover,
+  .jnv-item.active {
+    color: white;
+    border-color: $ORANGE;
+    background-color: $ORANGE;
+  }
+
+  .jnv-item[disabled="disabled"],
+  .jnv-item[disabled="disabled"]:hover {
+    cursor: not-allowed; //background-color: #8f8f8f;
+    //border-color: #545454;
+    background-color: $DEFAULT-BACK;
+    color: #999;
+  }
+}
+
+.jpn-offline {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+  text-align: center;
+  padding: 5px 10px;
+  // background: #d6ebf6;
+  // color: #5170b9;
+  background: #ffdcae;
+  color: #c62e1f;
+  font-size: 18px;
+  margin-top: 12px;
+  .jo-star{
+    margin: 0px 10px;
+    font-size: 14px;
+  }
+}

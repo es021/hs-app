@@ -1,0 +1,24 @@
+@import "./define/_constant.scss";
+.app-content {
+    background-size: cover;
+    background-position: center center;
+    padding-top: $HEADER-HEIGHT + 20;
+    .button-back {
+        text-align: left;
+        a {
+            margin: 10px;
+        }
+        margin-bottom: -28px;
+        margin-top: -12px;
+        margin-left: -3px;
+    }
+    .content-body {
+        padding: 10px;
+    }
+    .content-load {
+        text-align: center;
+        width: 100%;
+        margin-top: 20px;
+        color: $COLOR-BLUE;
+    }
+}

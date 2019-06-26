@@ -1,0 +1,20 @@
+@import './define/_constant';
+@import './define/_mixin';
+.app-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  flex-flow: column;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.75);
+  .text {
+      margin-top: 10px;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,64 @@
+$BR-BACK-COLOR : #e0e0e0;
+$BR-TEXT-COLOR : black;
+$BR-HOVER-COLOR : #b6b6b6;
+
+.jpn-breadcrumbs{
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    .jb-item{
+        margin-right: -5px;
+        margin-bottom: 5px;
+        //margin-right: 3px;
+        cursor: pointer;
+
+       // border: 2px solid $BR-BORDER-COLOR; 
+        display: flex;
+        .jbi-label{
+            font-size: 13px;
+            line-height: 19px;
+            background: $BR-BACK-COLOR;
+            color:$BR-TEXT-COLOR;
+            //background-image: linear-gradient(to bottom, #e9475e 0, #b61d43 100%);
+            padding: 5px;
+            padding-left: 7px;
+        }
+
+        .jbi-arrow{
+           // background-image: linear-gradient(to bottom, #e9475e 0, #b61d43 100%);
+            height: 100%;
+            border: solid $BR-BACK-COLOR 15px;
+            border-right: none;
+            border-top-color: rgba(0,0,0,0);
+            border-bottom-color: rgba(0,0,0,0);
+        }
+
+        .jbi-arrow-back{
+            height: 100%;
+            border: solid $BR-BACK-COLOR 15px;
+            border-right: none;
+            border-left-color: rgba(0,0,0,0);
+            //border-bottom-color: rgba(0,0,0,0);
+        }
+
+        
+    }
+
+    .jb-item:hover{
+        .jbi-label{
+            background: $BR-HOVER-COLOR;
+        }
+        .jbi-arrow{
+            border-color:  $BR-HOVER-COLOR;
+            border-right: none;
+            border-top-color: rgba(0,0,0,0);
+            border-bottom-color: rgba(0,0,0,0);
+        }
+        .jbi-arrow-back{
+            border-color:  $BR-HOVER-COLOR;
+            border-right: none;
+            border-left-color: rgba(0,0,0,0);
+        }
+    }
+}

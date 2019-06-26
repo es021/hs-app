@@ -1,0 +1,52 @@
+@import "./define/_constant.scss";
+@import "./define/_mixin.scss";
+* {
+  word-break: keep-all !important;
+  overflow-wrap: break-word; // to prevent padding go more than 100% width 
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.break-all {
+  word-break: break-all !important;
+}
+
+html,
+body {
+  //font-family: "Montserrat", Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.42857143;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.server-error {
+  font-size: 12px;
+  white-space: pre-wrap;
+  width: 590px;
+  overflow-y: scroll;
+  max-height: 80vh;
+}
+
+body #app {
+  background: white;
+  margin: auto;
+  width: 100%;
+  max-width: 90vw;
+  min-height: 100%;
+}
+
+.app-header {
+  width: 100%;
+}
+
+.app-content {
+  padding: 10px; //padding-left: $LEFT-WIDTH;
+  width: 100%;
+}

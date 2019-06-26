@@ -1,0 +1,21 @@
+.DS_Store
+node_modules/
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+src/transaction/SAA/_saaRegisterTransaction.js
+src/transaction/SAA2/_saa2RegisterTransaction.js
+src/transaction/SKC/_skcRegisterTransaction.js
+src/transaction/SKC2/_skc2RegisterTransaction.js
+src/transaction/SSD/_ssdRegisterTransaction.js
+src/transaction/SKC3/_skc3RegisterTransaction.js
+trace.out
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

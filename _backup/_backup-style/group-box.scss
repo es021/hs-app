@@ -1,0 +1,23 @@
+@import './define/_constant.scss';
+
+.group-box{
+    overflow: hidden;
+    width: 100%;
+    
+    margin: 14px 0px;
+    border: #bce8f1 solid 1px;
+    border-radius: 5px;
+
+    .gb-title{
+        color:#31708f;
+        padding: 10px;
+        font-size: 15px;
+        background-image: linear-gradient(to bottom,#d9edf7 0,#c4e3f3 100%);
+        background-repeat: repeat-x;
+        text-align: left;
+    }
+
+    .gb-content{
+        padding: 15px;
+    }
+}

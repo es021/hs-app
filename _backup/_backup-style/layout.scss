@@ -1,0 +1,22 @@
+.layout-row{ 
+    display: flex;
+    align-items: flex-start;
+}
+.layout-col-left{
+    margin-right: 7px;
+    width: 100%;
+}
+
+.layout-col-center{
+    margin:auto;
+    width: 50%;
+}
+
+.layout-col-right{
+    margin-left: 7px;
+    width: 100%;
+}
+
+.layout-col-full{
+    width: 100%;
+}

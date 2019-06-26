@@ -1,0 +1,84 @@
+@import './define/_constant';
+@import './define/_mixin';
+.app-alert {
+  @include flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  position: fixed;
+  left: 0;
+  top: 0;
+  .aa-bg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .aa-header {
+    font-size: 18px;
+    background: $COLOR-BLUE;
+    color: white;
+    position: relative;
+    padding: 15px 10px;
+    .aa-close {
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      color: white;
+    }
+  }
+  .aa-body {
+    overflow: hidden;
+    margin-top: -300px;
+    border-radius: 20px;
+    position: relative;
+    background: white;
+    width: 600px;
+    height: auto;
+    max-width: 99vw;
+    .aa-content {
+      padding:20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100px;
+      font-size: 20px;
+      flex-flow: column;
+      button{
+        margin-top:20px;
+      }
+    }
+  }
+}
+
+.app-alert.error {
+  .aa-header {
+    background: $COLOR-RED;
+  }
+}
+
+.app-alert.success {
+  .aa-header {
+    background: $COLOR-GREEN;
+  }
+}
+
+.app-alert.info {
+  .aa-header {
+    background: $COLOR-BLUE;
+  }
+}
+
+.app-alert.warning {
+  .aa-header {
+    background: $COLOR-BLUE-LIGHT;
+    color: #0c456f;
+    .aa-close {
+        color: #0c456f;
+    }
+  }
+}

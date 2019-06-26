@@ -1,0 +1,28 @@
+@import './define/_constant';
+.table-data {
+    
+    margin: 3px 13px;
+    margin-right: 0px;
+    overflow-x: auto;
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+    thead tr {
+        background: $COLOR-BLUE;
+        color: white;
+    }
+    th,
+    td {
+        text-align: left;
+        padding: 4px 8px;
+    }
+    tr{
+        background-color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #dce5e8;
+    }
+}
