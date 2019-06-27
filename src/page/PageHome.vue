@@ -1,9 +1,9 @@
 
 <template>
-<div>
+  <div>
     <h3>Home</h3>
     <LoaderCircular :loading="loading" size="small"></LoaderCircular>
-
+    {{user}}
     <div class="container">
       <div class="row">
         <div class="col s12">
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -21,6 +21,7 @@ export default {
   name: "default",
   data() {
     return {
+      user : {},
       loading: false
     };
   },
@@ -29,12 +30,13 @@ export default {
     this.loading = true;
     ApiHelper.graphql(
       `query{
-        messages_count(user_id:12){
-          total_unread
+        user(ID:136){
+          ID user_email first_name last_name
         }
       }`
     ).then(data => {
-      //this.loading = false;
+      this.user = data.user;
+      this.loading = false;
       console.log(data);
     });
   },

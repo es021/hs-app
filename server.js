@@ -94,17 +94,14 @@ initializeAllRoute(app, root, passport);
 const {
   template
 } = require('./_server/html/template.js');
-// app.get(root, function (req, res, next) {
-//   res.send(template(req.url));
-// });
 app.get('*', function (req, res, next) {
-  console.log("req.url", req.url)
+  //console.log("req.url", req.url)
   res.send(template(req.url));
 });
 
 // 8. Start Listening
 app.listen(PORT, () => {
-  console.log("React, Redux and GraphQL Server is now running on port " + PORT);
+  console.log("Express and GraphQL Server is now running on port " + PORT);
 });
 
 
