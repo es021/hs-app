@@ -1,55 +1,116 @@
 //const base64 = require('base-64');
 //const axios = require('axios');
-
+require('./_helper/lib-helper');
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const app = express();
 const PORT = 4000;
 const path = require('path');
+const uuid = require('uuid/v4')
+const passport = require('passport');
+const session = require('express-session')
+const FileStore = require('session-file-store')(session);
 const {
-    Secret
+  PassportHelper
+} = require('./_server/api/auth-api');
+const {
+  initializeAllRoute
+} = require('./_server/api/_route.js');
+const schemaCF = require('./_server/schema/_schema.js');
+const {
+  Secret
 } = require('./_server/secret/secret');
 
-// for gruveo
-const crypto = require('crypto');
-const {
-    Base64Encode
-} = require('base64-stream');
+// ##################################################################
+// ##################################################################
 
-
-const {
-    initializeAllRoute
-} = require('./_server/api/_route.js');
 const isProd = (process.env.NODE_ENV === "production");
-
-require('./_helper/lib-helper');
-
 var root = (isProd) ? "/cf" : "";
-//var root = "";
 if (isProd) {
-    console.log = function (mes) {
-        return;
-    };
+  console.log = function (mes) {
+    return;
+  };
 }
-//Use Career Fair Schema
-const schemaCF = require('./_server/schema/_schema.js');
 
-// body parser used in post argument
+// ##################################################################
+// ##################################################################
+
+// 1. Add Session
+app.use(session({
+  genid: (req) => {
+    // console.log("[SESSION]", "url", req.url)
+    // console.log("[SESSION]", "sessionID", req.sessionID)
+    return uuid() // use UUIDs for session IDs
+  },
+  store: new FileStore(),
+  secret: Secret.SESSION,
+  resave: false,
+  saveUninitialized: true
+}))
+
+// 2. Passport init
+passport.use(PassportHelper.localStrategy);
+passport.serializeUser(PassportHelper.serializeUser);
+passport.deserializeUser(PassportHelper.deserializeUser);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Test session
+// app.get('/', (req, res) => {
+//   console.log('Inside the homepage callback function')
+//   console.log("SESSION ID FROM CLIENT => " + req.sessionID)
+//   res.send(`You hit home page!\n`)
+// })
+
+// 2. body parser used in post argument
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
-    extended: true
-})); // support encoded bodies
+  extended: true
+}));
 
-
-//allow CORS
+// 3. allow CORS
 if (!isProd) {
-    app.use(function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 }
+
+// 4. Static Express Middleware for serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 5. Graphql route
+app.use(root + '/graphql', expressGraphQL({
+  schema: schemaCF,
+  graphiql: (process.env.NODE_ENV === "production") ? false : true //set able to use the graphQL web IDE to true
+}));
+
+// 6. All other route (APIS)
+initializeAllRoute(app, root, passport);
+
+// 7. Main Route For Index
+const {
+  template
+} = require('./_server/html/template.js');
+// app.get(root, function (req, res, next) {
+//   res.send(template(req.url));
+// });
+app.get('*', function (req, res, next) {
+  console.log("req.url", req.url)
+  res.send(template(req.url));
+});
+
+// 8. Start Listening
+app.listen(PORT, () => {
+  console.log("React, Redux and GraphQL Server is now running on port " + PORT);
+});
+
+
+// ##################################################################
+// ##################################################################
+
 
 // intercept to serve compress file
 // this has to put before Express Middleware for serving static files 
@@ -78,34 +139,3 @@ app.get(root + '/asset/*', function (req, res, next) {
     next();
 });
 */
-
-// Express Middleware for serving static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Graphql route
-app.use(root + '/graphql', expressGraphQL({
-    schema: schemaCF,
-    graphiql: (process.env.NODE_ENV === "production") ? false : true //set able to use the graphQL web IDE to true
-}));
-
-initializeAllRoute(app, root);
-
-const {
-    template
-} = require('./_server/html/template.js');
-
-app.get(root, function (req, res, next) {
-    //console.log("root");
-    template("Test");
-
-    res.sendFile(__dirname + '/public/index.html');
-});
-
-app.get('*', function (req, res, next) {
-    res.send(template(req.url));
-    //res.sendFile(__dirname + '/public/index.html');
-});
-
-app.listen(PORT, () => {
-    console.log("React, Redux and GraphQL Server is now running on port " + PORT);
-});

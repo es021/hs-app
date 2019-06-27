@@ -5,7 +5,7 @@ const path = require('path');
 const template = (url) => {
 
     var pwd = (process.env.PWD) ? process.env.PWD : process.env.INIT_CWD;
-    var templateFile = path.join(pwd, `server/html/index.html`);
+    var templateFile = path.join(pwd, `_server/html/index.html`);
     var content = fs.readFileSync(templateFile, 'utf8');
 
     // create title and description based on url
