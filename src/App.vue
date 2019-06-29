@@ -2,8 +2,7 @@
   <div id="app" >
     <AppPopup></AppPopup>
     <AppAlert></AppAlert>
-    <AppHeader></AppHeader>
-    <div class="app-content">
+    <div>
       <router-view/>
     </div>
   </div>

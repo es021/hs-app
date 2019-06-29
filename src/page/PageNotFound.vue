@@ -1,8 +1,6 @@
 
 <template>
-<div>
-    404 Page Not Found
-</div>
+  <AppContainer>404 Page Not Found</AppContainer>
 </template>
 
 <script>

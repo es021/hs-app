@@ -4,7 +4,7 @@ require('./_helper/lib-helper');
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const app = express();
-const PORT = 4000;
+const PORT = 7000;
 const path = require('path');
 const uuid = require('uuid/v4')
 const passport = require('passport');

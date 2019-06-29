@@ -9,8 +9,8 @@
     "dev:app-window": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node --max-old-space-size=4000 build/build.js",
-    "dev:server": "NODE_ENV=development-wp nodemon --ignore sessions/ server.js",
-    "dev:server-window": "set NODE_ENV=development-wp&& nodemon --ignore sessions/ server.js"
+    "dev:server": "NODE_ENV=development-wp nodemon --ignore sessions/ --ignore public/font server.js",
+    "dev:server-window": "set NODE_ENV=development-wp&& nodemon --ignore sessions/ --ignore public/font server.js"
   },
   "dependencies": {
     "axios": "^0.18.1",

@@ -4,11 +4,15 @@ import router from './router'
 Vue.config.productionTip = false
 
 //register all component
+import AppContainer from './components/AppContainer'
+import AppBanner from './components/AppBanner'
 import AppHeader from './components/AppHeader'
 import AppAlert from './components/AppAlert'
 import AppPopup from './components/AppPopup'
 import LoaderCircular from './components/LoaderCircular'
 
+Vue.component('AppContainer', AppContainer);
+Vue.component('AppBanner', AppBanner);
 Vue.component('AppHeader', AppHeader);
 Vue.component('AppPopup', AppPopup);
 Vue.component('AppAlert', AppAlert);
@@ -27,7 +31,7 @@ import 'materialize-css/dist/css/materialize.css'
 //   "alert", "nav-bar", "breadcrumb"
 // ];
 
-const scss = ["header", "content"];
+const scss = ["helper","header", "content"];
 scss.map((d, i) => {
   require(`./style/${d}.scss`);
 })

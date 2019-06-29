@@ -14,7 +14,7 @@ const SocketUrl = (isProd) ? `https://seedsjobfairapp.com/socket` : "http://loca
 
 const RootPath = (isProd) ? "/cf" : "";
 const AppPath = RootPath + "/app";
-var SiteUrl = (isProd) ? `https://seedsjobfairapp.com/cf` : "http://localhost:4000";
+var SiteUrl = (isProd) ? `https://seedsjobfairapp.com/cf` : "http://localhost:7000";
 var AssetUrl = (isProd) ? `https://seedsjobfairapp.com/public` : SiteUrl;
 var UploadUrl = AssetUrl + "/upload";
 var StaticUrl = AssetUrl + "/static";
