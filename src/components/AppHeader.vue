@@ -13,7 +13,10 @@
         </a>
         <ul class="right hide-on-med-and-down">
           <li v-for="(d,i) in items" :key="i">
-            <a href="#">{{d}}</a>
+            <a href="#">
+              <i class="material-icons left">{{d.icon}}</i>
+              {{d.label}}
+            </a>
           </li>
         </ul>
       </div>
@@ -21,7 +24,10 @@
 
     <ul class="sidenav" id="mobile-demo">
       <li v-for="(d,i) in items" :key="i">
-        <a href="#">{{d}}</a>
+        <a href="#">
+          <i class="material-icons left">{{d.icon}}</i>
+          {{d.label}}
+        </a>
       </li>
     </ul>
   </div>
@@ -40,7 +46,20 @@ export default {
   },
   data() {
     return {
-      items: ["Companies", "Events", "Students"]
+      items: [
+        {
+          label: "Companies",
+          icon: "business"
+        },
+        {
+          label: "Events",
+          icon: "mic"
+        },
+        {
+          label: "Students",
+          icon: "people"
+        },
+      ]
     };
   },
   computed: {

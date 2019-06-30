@@ -14,8 +14,12 @@
             </h1>
           </div>
           <div class="col s12">
-            <button class="btn red btn-large waves-effect waves-light">Sign Up</button>
-            <button class="btn blue btn-large waves-effect waves-light">Log In</button>
+            <button class="btn red btn-large waves-effect waves-light">
+              <i class="material-icons right">chevron_right</i>Sign Up
+            </button>
+            <button class="btn blue btn-large waves-effect waves-light">
+              <i class="material-icons right">chevron_right</i>Log In
+            </button>
           </div>
         </div>
       </div>

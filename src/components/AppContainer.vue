@@ -2,7 +2,7 @@
   <div>
     <AppHeader></AppHeader>
     <div :style="style">
-      <AppBanner></AppBanner>
+      <AppBanner v-if="withBanner"></AppBanner>
       <div class="section white">
         <slot></slot>
       </div>
@@ -13,7 +13,12 @@
 <script>
 export default {
   name: "default",
-  props: {},
+  props: {
+    withBanner: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       style: {
