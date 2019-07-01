@@ -165,42 +165,39 @@ const initializeAllRoute = function (app, root, passport) {
     var action = req.params.action;
     switch (action) {
       case 'login':
-        AuthAPI.loginPassport(req, res, next, passport);
+        AuthAPI.login(req.body.email, req.body.password, req).then((response) => {
+          routeResHandler(res, response);
+        });
         break;
 
-        // case 'login':
-        //     AuthAPI.login(req.body.email, req.body.password, req.body.cf, req).then((response) => {
-        //         routeResHandler(res, response);
+        // case 'password-reset-request':
+        //   AuthAPI.password_reset_request(req.body.user_email)
+        //     .then((response) => {
+        //       routeResHandler(res, response);
         //     });
-        //     break;
-      case 'password-reset-request':
-        AuthAPI.password_reset_request(req.body.user_email)
-          .then((response) => {
-            routeResHandler(res, response);
-          });
-        break;
-      case 'password-reset-old':
-        AuthAPI.password_reset_old(req.body.new_password, req.body.old_password, req.body.user_id)
-          .then((response) => {
-            routeResHandler(res, response);
-          });
-        break;
-      case 'password-reset-token':
-        AuthAPI.password_reset_token(req.body.new_password, req.body.token, req.body.user_id)
-          .then((response) => {
-            routeResHandler(res, response);
-          });
-        break;
-      case 'register':
-        AuthAPI.register(req.body.user).then((response) => {
-          routeResHandler(res, response);
-        });
-        break;
-      case 'activate-account':
-        AuthAPI.activateAccount(req.body.key, req.body.user_id).then((response) => {
-          routeResHandler(res, response);
-        });
-        break;
+        //   break;
+        // case 'password-reset-old':
+        //   AuthAPI.password_reset_old(req.body.new_password, req.body.old_password, req.body.user_id)
+        //     .then((response) => {
+        //       routeResHandler(res, response);
+        //     });
+        //   break;
+        // case 'password-reset-token':
+        //   AuthAPI.password_reset_token(req.body.new_password, req.body.token, req.body.user_id)
+        //     .then((response) => {
+        //       routeResHandler(res, response);
+        //     });
+        //   break;
+        // case 'register':
+        //   AuthAPI.register(req.body.user).then((response) => {
+        //     routeResHandler(res, response);
+        //   });
+        //   break;
+        // case 'activate-account':
+        //   AuthAPI.activateAccount(req.body.key, req.body.user_id).then((response) => {
+        //     routeResHandler(res, response);
+        //   });
+        //   break;
     }
 
   });

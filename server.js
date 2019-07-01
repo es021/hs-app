@@ -1,18 +1,11 @@
-//const base64 = require('base-64');
-//const axios = require('axios');
 require('./_helper/lib-helper');
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const app = express();
 const PORT = 7000;
 const path = require('path');
-const uuid = require('uuid/v4')
-const passport = require('passport');
-const session = require('express-session')
-const FileStore = require('session-file-store')(session);
-const {
-  PassportHelper
-} = require('./_server/api/auth-api');
+const jwt = require('jsonwebtoken');
+
 const {
   initializeAllRoute
 } = require('./_server/api/_route.js');
@@ -32,42 +25,39 @@ if (isProd) {
   };
 }
 
-// ##################################################################
-// ##################################################################
-
-// 1. Add Session
-app.use(session({
-  genid: (req) => {
-    // console.log("[SESSION]", "url", req.url)
-    // console.log("[SESSION]", "sessionID", req.sessionID)
-    return uuid() // use UUIDs for session IDs
-  },
-  store: new FileStore(),
-  secret: Secret.SESSION,
-  resave: false,
-  saveUninitialized: true
-}))
-
-// 2. Passport init
-passport.use(PassportHelper.localStrategy);
-passport.serializeUser(PassportHelper.serializeUser);
-passport.deserializeUser(PassportHelper.deserializeUser);
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Test session
-// app.get('/', (req, res) => {
-//   console.log('Inside the homepage callback function')
-//   console.log("SESSION ID FROM CLIENT => " + req.sessionID)
-//   res.send(`You hit home page!\n`)
-// })
-
 // 2. body parser used in post argument
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+// Init JWT
+// Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjozMDIsImlhdCI6MTU2MTk2ODQ0M30.wBwGMY8GgNLBe8shzwkXczkJkZ_Az7htqOTijSgqxn0
+app.use(function (req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    // console.log("req.headers.authorization", req.headers.authorization);
+    // console.log("token from client", token)
+    jwt.verify(token, Secret.JWT_TOKEN_KEY, function (err, payload) {
+      // console.log("payload", payload)
+      // console.log("req.body.userId", req.body.uuid)
+      if (payload) {
+        if (payload.uuid == req.body.uuid) {
+          next()
+        } else {
+          res.status(500).json({
+            error: `Invalid Token (uuid : ${req.body.uuid})`
+          });
+        }
+      } else {
+        next()
+      }
+    })
+  } catch (e) {
+    next()
+  }
+})
 
 // 3. allow CORS
 if (!isProd) {
@@ -88,7 +78,7 @@ app.use(root + '/graphql', expressGraphQL({
 }));
 
 // 6. All other route (APIS)
-initializeAllRoute(app, root, passport);
+initializeAllRoute(app, root);
 
 // 7. Main Route For Index
 const {
@@ -136,3 +126,44 @@ app.get(root + '/asset/*', function (req, res, next) {
     next();
 });
 */
+
+
+// ##################################################################
+// ##################################################################
+
+// 1. Add Session
+// app.use(session({
+//   genid: (req) => {
+//     // console.log("[SESSION]", "url", req.url)
+//     // console.log("[SESSION]", "sessionID", req.sessionID)
+//     return uuid() // use UUIDs for session IDs
+//   },
+//   store: new FileStore(),
+//   secret: Secret.SESSION,
+//   resave: false,
+//   saveUninitialized: true
+// }))
+
+// 2. Passport init
+// passport.use(PassportHelper.localStrategy);
+// passport.serializeUser(PassportHelper.serializeUser);
+// passport.deserializeUser(PassportHelper.deserializeUser);
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// Test session
+// app.get('/', (req, res) => {
+//   console.log('Inside the homepage callback function')
+//   console.log("SESSION ID FROM CLIENT => " + req.sessionID)
+//   res.send(`You hit home page!\n`)
+// })
+
+//const base64 = require('base-64');
+//const axios = require('axios');
+// const uuid = require('uuid/v4')
+// const passport = require('passport');
+// const session = require('express-session')
+// const FileStore = require('session-file-store')(session);
+// const {
+//   PassportHelper
+// } = require('./_server/api/auth-api');

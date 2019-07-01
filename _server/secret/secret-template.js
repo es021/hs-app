@@ -1,4 +1,5 @@
 const Secret = {
+  JWT_TOKEN_KEY : "",
   SESSION: '',
   DB_HOST: "",
   DB_USER: "",
