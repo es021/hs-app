@@ -98,6 +98,11 @@ function graphql(queryString) {
   });
 }
 
+/**
+ * @desc get static file using axios
+ * @param filename
+ * @param version
+ */
 function getStaticAxios(filename, version = null) {
   var config = {
     proxy: false

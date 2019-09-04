@@ -7,7 +7,7 @@ _server/secret/secret.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+docs
 trace.out
 
 # Editor directories and files
