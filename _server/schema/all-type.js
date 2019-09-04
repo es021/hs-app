@@ -10,15 +10,17 @@ const {
 const {
   __
 } = require("../../_config/graphql-config");
-const DbConfig = require("../../_config/db-config");
+const DC = require("../../_config/db-config");
 
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    ...DbConfig.UserAttr,
+    ...DC.getAttr(DC.User),
+
     // additional
     is_active: __.Boolean,
     is_profile_completed: __.Boolean,
+
     // other type relation
     company: {
       type: CompanyType
@@ -29,9 +31,11 @@ const UserType = new GraphQLObjectType({
 const CompanyType = new GraphQLObjectType({
   name: 'Company',
   fields: () => ({
-    ...DbConfig.CompanyAttr,
+    ...DC.getAttr(DC.Company),
+
     // additional
     vacancies_count: __.Int,
+
     // other type relation
     recruiters: {
       type: new GraphQLList(UserType)
@@ -49,9 +53,6 @@ module.exports = {
 // #############################################################################################
 /**
  * 
-
-
-
 
 
 const NotificationType = new GraphQLObjectType({

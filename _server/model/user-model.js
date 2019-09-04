@@ -1,8 +1,8 @@
 const DB = require('./_DB.js');
 const DbConfig = require('../../_config/db-config.js');
-const {
-  RequiredFieldStudent
-} = require('../../_config/registration-config.js');
+// const {
+//   RequiredFieldStudent
+// } = require('../../_config/registration-config.js');
 
 // ##################################################################################
 // ##################################################################################
@@ -195,11 +195,11 @@ function getUserHelper(type, params, field, metaCons) {
     field["user_status"] = 1;
   }
 
-  if (field["is_profile_completed"] !== "undefined") {
-    for (var i in RequiredFieldStudent) {
-      field[RequiredFieldStudent[i]] = 1;
-    }
-  }
+  // if (field["is_profile_completed"] !== "undefined") {
+  //   for (var i in RequiredFieldStudent) {
+  //     field[RequiredFieldStudent[i]] = 1;
+  //   }
+  // }
 
   var isSingle = (type === "single");
   var sql = "";

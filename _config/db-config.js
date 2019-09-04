@@ -2,227 +2,181 @@ const {
   __
 } = require("./graphql-config");
 
+// ################################################
+// internal helper functions
+function _x_(key, type) {
+  return {
+    key: key,
+    type: type
+  }
+}
+
 module.exports = {
-  // #############################################
-  // #############################################
-  CompanyAttr: {
-    ID: __.Int,
-    name: __.String,
-    tagline: __.String,
-    description: __.String,
-    more_info: __.String,
-    img_url: __.String,
-    img_size: __.String,
-    img_position: __.String,
-    img_pos: __.String,
-    banner_url: __.String,
-    banner_size: __.String,
-    banner_position: __.String,
-    message_drop_resume: __.String,
-    status: __.String,
-    rec_privacy: __.Int,
-    sponsor_only: __.Int,
-    type: __.Int,
-    accept_prescreen: __.Int,
-    group_url: __.String,
-    priviledge: __.String,
-    created_at: __.String,
-    updated_at: __.String,
+  getAttr(DbTable) {
+    let toRet = {};
+    for (var k in DbTable) {
+      let col = DbTable[k];
+      toRet[col.key] = col.type;
+    }
+    return toRet;
   },
   Company: {
-    TABLE: "companies",
-    ID: "ID",
-    CF: "cf",
-    NAME: "name",
-    REC_PRIVACY: "rec_privacy",
-    SPONSOR_ONLY: "sponsor_only",
-    STATUS: "status",
-    TAGLINE: "tagline",
-    DESCRIPTION: "description",
-    MORE_INFO: "more_info",
-    IMG_URL: "img_url",
-    IMG_SIZE: "img_size",
-    MESSAGE_DROP_RESUME: "message_drop_resume",
-    PRIVILEDGE: "priviledge",
-    GROUP_URL: "group_url",
-    IMG_POSITION: "img_position",
-    TYPE: "type",
-    ACCEPT_PRESCREEN: "accept_prescreen"
+    ID: _x_("ID", __.Int),
+    SLUG: _x_("slug", __.String),
+    CREATED_AT: _x_("created_at", __.String),
+    UPDATED_AT: _x_("updated_at", __.String),
+
+    NAME: _x_("name", __.String),
+    STATUS: _x_("status", __.String),
+
+    // REC_PRIVACY: "rec_privacy",
+    // SPONSOR_ONLY: "sponsor_only",
+    // TAGLINE: "tagline",
+    // DESCRIPTION: "description",
+    // MORE_INFO: "more_info",
+    // IMG_URL: "img_url",
+    // IMG_SIZE: "img_size",
+    // MESSAGE_DROP_RESUME: "message_drop_resume",
+    // PRIVILEDGE: "priviledge",
+    // GROUP_URL: "group_url",
+    // IMG_POSITION: "img_position",
+    // TYPE: "type",
+    // ACCEPT_PRESCREEN: "accept_prescreen"
   },
   CompanyEnum: {
-    STS_OPEN: "Open",
-    STS_CLOSED: "Closed",
-    STS_PS: "Prescreen Only",
-    STS_RD: "Resume Drop Only",
-    STS_GS: "Group Session",
-    PRIV: {
-      ACCESS_ALL_STUDENT: "ACCESS_ALL_STUDENT",
-      ACCESS_RS_PRE_EVENT: "ACCESS_RS_PRE_EVENT",
-      ACCESS_RS_DURING_EVENT: "ACCESS_RS_DURING_EVENT",
-      SCHEDULE_PRIVATE_SESSION: "SCHEDULE_PRIVATE_SESSION",
-    },
-    parsePrivs: (arr) => {
-      if (arr == null || typeof arr === "undefined") {
-        return [];
-      }
-
-      if (!Array.isArray(arr)) {
-        try {
-          arr = JSON.parse(arr);
-          return arr;
-        } catch (err) {
-          console.error("Error in parsing JSON in CompanyEnum.parseArr()");
-          return [];
-        }
-      }
-
-      return arr;
-    },
-    hasPriv: (privArrs, priv) => {
-      if (!Array.isArray(privArrs)) {
-        try {
-          privArrs = JSON.parse(privArrs);
-        } catch (err) {
-          console.error("Error in parsing JSON in CompanyEnum.hasPriv()", privArrs);
-          return false;
-        }
-      }
-
-      if (privArrs.indexOf(priv) >= 0) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    TYPE_PLATINUM: -1,
-    TYPE_SPECIAL: 0,
-    TYPE_GOLD: 1,
-    TYPE_SILVER: 2,
-    TYPE_BRONZE: 3,
-    TYPE_NORMAL: 4,
-    REC_PRIVACY_PUBLIC: 0,
-    REC_PRIVACY_PRIVATE: 1,
-    getTypeStr: (type) => {
-      switch (type) {
-        case -1:
-          return "Platinum";
-        case 0:
-          return "Special";
-        case 1:
-          return "Gold";
-        case 2:
-          return "Silver";
-        case 3:
-          return "Bronze";
-        case 4:
-          return "Normal";
-      }
-    }
-  },
-  // #############################################
-  // #############################################
-  UserAttr: {
-    ID: __.Int,
-    user_email: __.String,
-    user_pass: __.String,
-    first_name: __.String,
-    last_name: __.String,
-    description: __.String,
-    role: __.String,
-    img_url: __.String,
-    img_pos: __.String,
-    img_size: __.String,
-    feedback: __.String,
-    user_status: __.String,
-    activation_key: __.String,
-    // student only
-    university: __.String,
-    phone_number: __.String,
-    graduation_month: __.String,
-    graduation_year: __.String,
-    available_month: __.String,
-    available_year: __.String,
-    sponsor: __.String,
-    cgpa: __.String,
-    study_field: __.String,
-    degree_level: __.String,
-    major: __.String,
-    minor: __.String,
-    mas_state: __.String,
-    mas_postcode: __.String,
-    relocate: __.String,
-    study_place: __.String,
-    looking_for: __.String,
-    gender: __.String,
-    // rec only
-    company_id: __.Int,
-    rec_position: __.String,
-    rec_company: __.String,
+    STATUS_ACTIVE: "Active",
+    STATUS_INACTIVE: "Inactive",
   },
   User: {
-    TABLE: "wp_cf_users",
-    ID: "ID",
-    EMAIL: "user_email",
-    LOGIN: "user_login",
-    PASSWORD: "user_pass",
-    ACTIVATION_KEY: "user_activation_key",
-    REGISTER_AT: "user_registered",
-    TRIGGER_UPDATE: "trigger_update",
-    CF: "cf",
-    SKIP_DELETE_CF: "skip_delete_cf"
-  },
-  UserMeta: {
-    TABLE: "wp_cf_usermeta",
-    // all roles usermeta
-    FIRST_NAME: "first_name",
-    LAST_NAME: "last_name",
-    DESCRIPTION: "description",
-    ROLE: "wp_cf_capabilities",
-    IMG_URL: "reg_profile_image_url",
-    IMG_POS: "profile_image_position",
-    IMG_SIZE: "profile_image_size",
-    FEEDBACK: "feedback",
-    USER_STATUS: "user_status",
-    IS_ACTIVATED: "is_activated",
-    ACTIVATION_KEY: "activation_key",
-    // student only
-    UNIVERSITY: "university",
-    PHONE_NUMBER: "phone_number",
-    GRADUATION_MONTH: "graduation_month",
-    GRADUATION_YEAR: "graduation_year",
-    AVAILABLE_MONTH: "available_month",
-    AVAILABLE_YEAR: "available_year",
-    SPONSOR: "sponsor",
-    CGPA: "cgpa",
-    STUDY_FIELD: "study_field",
-    MAJOR: "major",
-    MINOR: "minor",
-    GENDER: "gender",
-    DEGREE_LEVEL: "degree_level",
-    MAS_POSTCODE: "mas_postcode",
-    MAS_STATE: "mas_state",
-    RELOCATE: "relocate",
-    STUDY_PLACE: "study_place",
-    LOOKING_FOR: "looking_for",
+    ID: _x_("ID", __.Int),
+    SLUG: _x_("slug", __.String),
+    CREATED_AT: _x_("created_at", __.String),
+    UPDATED_AT: _x_("updated_at", __.String),
+
+    EMAIL: _x_("email", __.String),
+    PASSWORD: _x_("password", __.String),
+    FIRST_NAME: _x_("first_name", __.String),
+    LAST_NAME: _x_("last_name", __.String),
+    ROLE: _x_("role", __.String),
+    STATUS: _x_("status", __.String),
+    IMG_URL: _x_("img_url", __.String),
+    IMG_POS: _x_("img_pos", __.String),
+    IMG_SIZE: _x_("img_size", __.String),
+
+
+    // uni only
+    UNI_ID: _x_("uni_id", __.Int),
+
     // rec only
-    REC_COMPANY: "rec_company",
-    REC_POSITION: "rec_position"
+    COMPANY_ID: _x_("company_id", __.Int),
+    COMPANY_POSITION: _x_("company_position", __.String),
+
+
+    // // student only
+    // DESCRIPTION: "description",
+    // UNIVERSITY: "university",
+    // PHONE_NUMBER: "phone_number",
+    // GRADUATION_MONTH: "graduation_month",
+    // GRADUATION_YEAR: "graduation_year",
+    // AVAILABLE_MONTH: "available_month",
+    // AVAILABLE_YEAR: "available_year",
+    // SPONSOR: "sponsor",
+    // CGPA: "cgpa",
+    // STUDY_FIELD: "study_field",
+    // MAJOR: "major",
+    // MINOR: "minor",
+    // GENDER: "gender",
+    // DEGREE_LEVEL: "degree_level",
+    // RELOCATE: "relocate",
+    // STUDY_PLACE: "study_place",
+    // LOOKING_FOR: "looking_for",
+
+
   },
   UserEnum: {
     GENDER_MALE: "Male",
     GENDER_FEMALE: "Female",
-    LOOK_FOR_FULL_TIME: "Full-Time",
-    LOOK_FOR_INTERN: "Internship",
     ROLE_STUDENT: "student",
     ROLE_RECRUITER: "recruiter",
     ROLE_ADMIN: "administrator",
     ROLE_EDITOR: "editor",
     ROLE_ORGANIZER: "organizer",
     ROLE_SUPPORT: "support",
-    STATUS_ACT: "Active",
-    STATUS_NOT_ACT: "Not Activated"
+    STATUS_ACTIVE: "Active",
+    STATUS_INACTIVE: "Inactive",
   }
 }
+
+
+// #############################################
+// #############################################
+// CompanyAttr: {
+//   ID: __.Int,
+//   name: __.String,
+//   tagline: __.String,
+//   description: __.String,
+//   more_info: __.String,
+//   img_url: __.String,
+//   img_size: __.String,
+//   img_position: __.String,
+//   img_pos: __.String,
+//   banner_url: __.String,
+//   banner_size: __.String,
+//   banner_position: __.String,
+//   message_drop_resume: __.String,
+//   status: __.String,
+//   rec_privacy: __.Int,
+//   sponsor_only: __.Int,
+//   type: __.Int,
+//   accept_prescreen: __.Int,
+//   group_url: __.String,
+//   priviledge: __.String,
+//   created_at: __.String,
+//   updated_at: __.String,
+// },
+// #############################################
+// #############################################
+// UserAttr: {
+//   ID: __.Int,
+//   email: __.String,
+//   password: __.String,
+//   first_name: __.String,
+//   last_name: __.String,
+//   description: __.String,
+//   role: __.String,
+//   img_url: __.String,
+//   img_pos: __.String,
+//   img_size: __.String,
+//   feedback: __.String,
+//   status: __.String,
+
+//   // uni related only
+//   uni_id: __.Int,
+
+//   // student only
+//   university: __.String,
+//   phone_number: __.String,
+//   graduation_month: __.String,
+//   graduation_year: __.String,
+//   available_month: __.String,
+//   available_year: __.String,
+//   sponsor: __.String,
+//   cgpa: __.String,
+//   study_field: __.String,
+//   degree_level: __.String,
+//   major: __.String,
+//   minor: __.String,
+//   mas_state: __.String,
+//   mas_postcode: __.String,
+//   relocate: __.String,
+//   study_place: __.String,
+//   looking_for: __.String,
+//   gender: __.String,
+
+//   // rec only
+//   comp_id: __.Int,
+//   comp_position: __.String,
+// },
 
 // #########################################################################
 // #########################################################################

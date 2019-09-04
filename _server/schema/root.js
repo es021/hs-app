@@ -16,8 +16,10 @@ const {
 // ######################################################
 // ######################################################
 
-const UserModel = require('../model/user-model.js');
-const CompanyModel = require('../model/company-model.js');
+const DC = require('../../_config/db-config.js');
+const _Model = require('../model/_model.js');
+// const UserModel = require('../model/user-model.js');
+// const CompanyModel = require('../model/company-model.js');
 
 // ######################################################
 // ######################################################
@@ -26,52 +28,65 @@ var fields = {};
 fields["user"] = {
   type: Type.UserType,
   args: {
-    ID: __.Int,
-    user_email: __.String,
+    ...DC.getAttr([DC.User.ID, DC.User.SLUG, DC.User.EMAIL]),
   },
   resolve(pVal, arg, context, info) {
-    return UserModel.user(arg, graphqlFields(info));
+    return _Model.get({
+      isSingle: true,
+      table: "users",
+      param: arg,
+      field: graphqlFields(info),
+    });
   }
 };
 
 fields["users"] = {
   type: new GraphQLList(Type.UserType),
   args: {
-    role: __.String,
+    ...DC.getAttr([DC.User.ROLE]),
     page: __.Int,
     offset: __.Int,
     order_by: __.String,
-    //search query
-    search_user: __.String,
-    search_degree: __.String,
-    search_university: __.String,
   },
   resolve(pVal, arg, context, info) {
-    return UserModel.users(arg, graphqlFields(info));
+    return _Model.get({
+      isSingle: false,
+      table: "users",
+      param: arg,
+      field: graphqlFields(info),
+    });
   }
 };
 
 fields["company"] = {
   type: Type.CompanyType,
   args: {
-    ID: __.IntNonNull
+    ...DC.getAttr([DC.Company.ID, DC.Company.SLUG, DC.Company.NAME]),
   },
   resolve(pVal, arg, context, info) {
-    return CompanyModel.company(arg.ID, graphqlFields(info));
+    return _Model.get({
+      isSingle: true,
+      table: "companies",
+      param: arg,
+      field: graphqlFields(info),
+    });
   }
 };
 fields["companies"] = {
   type: new GraphQLList(Type.CompanyType),
   args: {
-    type: __.Int,
-    cf: __.String,
-    accept_prescreen: __.Int,
-    include_sponsor: __.Int,
-    ignore_type: __.String,
+    ...DC.getAttr([DC.Company.STATUS]),
+    page: __.Int,
+    offset: __.Int,
     order_by: __.String,
   },
   resolve(pVal, arg, context, info) {
-    return CompanyModel.companies(arg, graphqlFields(info));
+    return _Model.get({
+      isSingle: false,
+      table: "companies",
+      param: arg,
+      field: graphqlFields(info),
+    });
   }
 };
 
