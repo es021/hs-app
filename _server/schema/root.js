@@ -33,7 +33,7 @@ fields["user"] = {
   resolve(pVal, arg, context, info) {
     return _Model.get({
       isSingle: true,
-      table: "users",
+      table: DC.UserEnum.TABLE,
       param: arg,
       field: graphqlFields(info),
     });
@@ -51,7 +51,7 @@ fields["users"] = {
   resolve(pVal, arg, context, info) {
     return _Model.get({
       isSingle: false,
-      table: "users",
+      table: DC.UserEnum.TABLE,
       param: arg,
       field: graphqlFields(info),
     });
@@ -66,7 +66,7 @@ fields["company"] = {
   resolve(pVal, arg, context, info) {
     return _Model.get({
       isSingle: true,
-      table: "companies",
+      table: DC.CompanyEnum.TABLE,
       param: arg,
       field: graphqlFields(info),
     });
@@ -83,7 +83,7 @@ fields["companies"] = {
   resolve(pVal, arg, context, info) {
     return _Model.get({
       isSingle: false,
-      table: "companies",
+      table: DC.CompanyEnum.TABLE,
       param: arg,
       field: graphqlFields(info),
     });

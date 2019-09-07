@@ -1,6 +1,15 @@
 const DB = require('./_DB.js');
-const {} = require('../../_config/db-config');
+const DC = require('../../_config/db-config');
 
+
+function isMetaKeyValid(key) {
+  let mainCols = ["ID", "slug", "created_at", "updated_at"];
+  if (mainCols.indexOf(key) >= 0) {
+    return false;
+  }
+
+  return true;
+}
 
 function selectMeta(table, _id, _key) {
   return `select meta._value from ${table}_meta meta where meta._id = ${_id} and meta._key = '${_key}'`;
@@ -36,9 +45,11 @@ function sqlGet({
 
   var select = "main.*";
   for (var k in field) {
-    var meta_key = k.toLowerCase();
-    if (typeof field[meta_key] !== "undefined") {
-      select += `, ${selectMetaAs(table, "main.ID", k, meta_key)}`;
+    var as = k.toLowerCase();
+    if (typeof field[as] !== "undefined") {
+      if (isMetaKeyValid(k)) {
+        select += `, ${selectMetaAs(table, "main.ID", k, as)}`;
+      }
     }
   }
 
@@ -57,35 +68,70 @@ function sqlGet({
 }
 
 
-module.exports = {
-  get: ({
-    isSingle,
-    table,
-    param,
-    field,
-  }) => {
 
-    var sql = sqlGet({
-      table: table,
-      param: param,
-      field: field
-    });
+const Entities = DC.Entities;
 
-
-    return DB.query(sql).then(function (res) {
-      for (var i in res) {
-        // var company_id = res[i]["ID"];
-        // //Add recruiters ***********************************
-        // if (typeof field["recruiters"] !== "undefined") {
-        //   res[i]["recruiters"] = UserModel.recruiters(company_id, field["recruiters"]);
-        // }
-      }
-
-      if (isSingle) {
-        return res[0];
-      } else {
-        return res;
-      }
-    });
+function addEntityId(field) {
+  for (var k in Entities) {
+    let id = Entities[k].id;
+    if (typeof field[k] !== "undefined") {
+      field[id] = "1";
+    }
   }
+  return field;
+}
+
+function addForeignEntity(res, field) {
+  for (var k in Entities) {
+    let id = Entities[k].id;
+    let table = Entities[k].table;
+    let isSingle = Entities[k].isSingle;
+    if (typeof field[k] !== "undefined" && res[id] != null) {
+      res[k] = get({
+        isSingle: isSingle,
+        table: table,
+        param: {
+          ID: res[id]
+        },
+        field: field[k]
+      });
+    }
+    return res;
+  }
+}
+
+
+// ################################################################
+// TO EXPORT
+
+const get = ({
+  isSingle,
+  table,
+  param,
+  field,
+}) => {
+
+  field = addEntityId(field);
+
+  var sql = sqlGet({
+    table: table,
+    param: param,
+    field: field
+  });
+
+  return DB.query(sql).then(function (res) {
+    for (var i in res) {
+      res[i] = addForeignEntity(res[i], field);
+    }
+
+    if (isSingle) {
+      return res[0];
+    } else {
+      return res;
+    }
+  });
 };
+
+module.exports = {
+  get
+}

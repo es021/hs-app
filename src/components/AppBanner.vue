@@ -1,16 +1,16 @@
 <template>
   <div class="parallax-container" :style="{background:'rgba(0,0,0,0.4)'}">
     <div class="parallax">
-      <img :src="require('../image/banner.jpg')">
+      <img :src="AppConfig.getImgUploadUrl('banner.jpg')">
     </div>
     <div class="white-text">
       <div class="container">
         <div class="row">
           <div class="col s12 valign-wrapper" :style="{marginTop:'90px'}">
-            <h1 class="width-full white-text">
-              Something Awesome
+            <h1 class="width-full white-text bold">
+              <b>{{AppConfig.AppName.toUpperCase()}}</b>
               <br>
-              <small>Yes it is awesome</small>
+              <small>{{AppConfig.AppDesc}}</small>
             </h1>
           </div>
           <div class="col s12">
@@ -27,16 +27,22 @@
   </div>
 </template>
 <script>
+import * as AppConfig from "../../_config/app-config";
 export default {
   name: "default",
   props: {},
   data() {
-    return {};
+    return {
+      AppConfig
+    };
   },
   computed: {
     // ...mapGetters(["authUser"])
   },
-  mounted() {},
+
+  mounted() {
+    console.log("banner mount");
+  },
   methods: {}
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <AppPopup></AppPopup>
     <AppAlert></AppAlert>
     <div>
@@ -12,13 +12,14 @@
 export default {
   name: "App",
   mounted() {},
-  // watch: {
-  //   $route(to, from) {
-  //     if (to.path != from.path) {
-  //       location.reload();
-  //     }
-  //   }
-  // },
+  watch: {
+    $route(to, from) {
+      // to reload parallax image
+      if (to.path == "/") {
+        location.reload();
+      }
+    }
+  },
   methods: {}
 };
 </script>

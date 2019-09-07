@@ -29,11 +29,11 @@ var routes = [{
     name: 'PageNotFound',
     component: PageNotFound
   },
-  {
-    path: '/*',
-    name: 'PageNotFound',
-    component: PageNotFound
-  }
+  // {
+  //   path: '/*',
+  //   name: 'PageNotFound',
+  //   component: PageNotFound
+  // }
 ]
 
 
@@ -43,4 +43,5 @@ Vue.use(Router)
 const router = new Router({
   routes: routes
 })
+
 export default router;

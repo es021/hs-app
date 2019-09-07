@@ -101,31 +101,32 @@ app.listen(PORT, () => {
 
 // intercept to serve compress file
 // this has to put before Express Middleware for serving static files 
-/* // deprecated -- in nginx, gzip serve tru nginx 
-// no need for this
-const publicRoot = (isProd) ? "" : "public";
-const hasGz = [
-    "/asset/js/main.bundle.js"
-    //, "/asset/js/vendors.bundle.js"
-    //, "/asset/css/main.bundle.css"
-];
+// deprecated -- in nginx, gzip serve tru nginx 
+// // no need for this
+// const publicRoot = (isProd) ? "" : "public";
+// const hasGz = [
+//     "/asset/js/main.bundle.js"
+//     //, "/asset/js/vendors.bundle.js"
+//     //, "/asset/css/main.bundle.css"
+// ];
 
-app.get(root + '/asset/*', function (req, res, next) {
-    //strip version query
-    if (req.url.indexOf("?v=") >= 0) {
-        var urlArr = req.url.split("?v=");
-        req.url = urlArr[0];
-        var version = urlArr[1];
-    }
+// app.get(root + '/asset/*', function (req, res, next) {
+//     //strip version query
+//     console.log(req);
+//     if (req.url.indexOf("?v=") >= 0) {
+//         var urlArr = req.url.split("?v=");
+//         req.url = urlArr[0];
+//         var version = urlArr[1];
+//     }
 
-    if (hasGz.indexOf(req.url) >= 0) {
-        req.url = req.url + '.gz' + "?v=" + version;
-        console.log(req.url);
-        res.set('Content-Encoding', 'gzip');
-    }
-    next();
-});
-*/
+//     if (hasGz.indexOf(req.url) >= 0) {
+//         req.url = req.url + '.gz' + "?v=" + version;
+//         console.log(req.url);
+//         res.set('Content-Encoding', 'gzip');
+//     }
+//     next();
+// });
+
 
 
 // ##################################################################

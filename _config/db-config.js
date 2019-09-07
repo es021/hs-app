@@ -11,103 +11,142 @@ function _x_(key, type) {
   }
 }
 
-module.exports = {
-  getAttr(DbTable) {
-    let toRet = {};
-    for (var k in DbTable) {
-      let col = DbTable[k];
-      toRet[col.key] = col.type;
-    }
-    return toRet;
-  },
-  Company: {
-    ID: _x_("ID", __.Int),
-    SLUG: _x_("slug", __.String),
-    CREATED_AT: _x_("created_at", __.String),
-    UPDATED_AT: _x_("updated_at", __.String),
-
-    NAME: _x_("name", __.String),
-    STATUS: _x_("status", __.String),
-
-    // REC_PRIVACY: "rec_privacy",
-    // SPONSOR_ONLY: "sponsor_only",
-    // TAGLINE: "tagline",
-    // DESCRIPTION: "description",
-    // MORE_INFO: "more_info",
-    // IMG_URL: "img_url",
-    // IMG_SIZE: "img_size",
-    // MESSAGE_DROP_RESUME: "message_drop_resume",
-    // PRIVILEDGE: "priviledge",
-    // GROUP_URL: "group_url",
-    // IMG_POSITION: "img_position",
-    // TYPE: "type",
-    // ACCEPT_PRESCREEN: "accept_prescreen"
-  },
-  CompanyEnum: {
-    STATUS_ACTIVE: "Active",
-    STATUS_INACTIVE: "Inactive",
-  },
-  User: {
-    ID: _x_("ID", __.Int),
-    SLUG: _x_("slug", __.String),
-    CREATED_AT: _x_("created_at", __.String),
-    UPDATED_AT: _x_("updated_at", __.String),
-
-    EMAIL: _x_("email", __.String),
-    PASSWORD: _x_("password", __.String),
-    FIRST_NAME: _x_("first_name", __.String),
-    LAST_NAME: _x_("last_name", __.String),
-    ROLE: _x_("role", __.String),
-    STATUS: _x_("status", __.String),
-    IMG_URL: _x_("img_url", __.String),
-    IMG_POS: _x_("img_pos", __.String),
-    IMG_SIZE: _x_("img_size", __.String),
-
-
-    // uni only
-    UNI_ID: _x_("uni_id", __.Int),
-
-    // rec only
-    COMPANY_ID: _x_("company_id", __.Int),
-    COMPANY_POSITION: _x_("company_position", __.String),
-
-
-    // // student only
-    // DESCRIPTION: "description",
-    // UNIVERSITY: "university",
-    // PHONE_NUMBER: "phone_number",
-    // GRADUATION_MONTH: "graduation_month",
-    // GRADUATION_YEAR: "graduation_year",
-    // AVAILABLE_MONTH: "available_month",
-    // AVAILABLE_YEAR: "available_year",
-    // SPONSOR: "sponsor",
-    // CGPA: "cgpa",
-    // STUDY_FIELD: "study_field",
-    // MAJOR: "major",
-    // MINOR: "minor",
-    // GENDER: "gender",
-    // DEGREE_LEVEL: "degree_level",
-    // RELOCATE: "relocate",
-    // STUDY_PLACE: "study_place",
-    // LOOKING_FOR: "looking_for",
-
-
-  },
-  UserEnum: {
-    GENDER_MALE: "Male",
-    GENDER_FEMALE: "Female",
-    ROLE_STUDENT: "student",
-    ROLE_RECRUITER: "recruiter",
-    ROLE_ADMIN: "administrator",
-    ROLE_EDITOR: "editor",
-    ROLE_ORGANIZER: "organizer",
-    ROLE_SUPPORT: "support",
-    STATUS_ACTIVE: "Active",
-    STATUS_INACTIVE: "Inactive",
+//#################
+// HELPER FUNCTION
+const getAttr = (DbTable) => {
+  let toRet = {};
+  for (var k in DbTable) {
+    let col = DbTable[k];
+    toRet[col.key] = col.type;
   }
+  return toRet;
 }
 
 
+//######################
+// DETAILED MODEL MODEL
+const Company = {
+  ID: _x_("ID", __.Int),
+  SLUG: _x_("slug", __.String),
+  CREATED_AT: _x_("created_at", __.String),
+  UPDATED_AT: _x_("updated_at", __.String),
+
+  NAME: _x_("name", __.String),
+  STATUS: _x_("status", __.String),
+
+  // REC_PRIVACY: "rec_privacy",
+  // SPONSOR_ONLY: "sponsor_only",
+  // TAGLINE: "tagline",
+  // DESCRIPTION: "description",
+  // MORE_INFO: "more_info",
+  // IMG_URL: "img_url",
+  // IMG_SIZE: "img_size",
+  // MESSAGE_DROP_RESUME: "message_drop_resume",
+  // PRIVILEDGE: "priviledge",
+  // GROUP_URL: "group_url",
+  // IMG_POSITION: "img_position",
+  // TYPE: "type",
+  // ACCEPT_PRESCREEN: "accept_prescreen"
+}
+const CompanyEnum = {
+  TABLE: "companies",
+  STATUS_ACTIVE: "Active",
+  STATUS_INACTIVE: "Inactive",
+}
+const User = {
+  ID: _x_("ID", __.Int),
+  SLUG: _x_("slug", __.String),
+  CREATED_AT: _x_("created_at", __.String),
+  UPDATED_AT: _x_("updated_at", __.String),
+
+  EMAIL: _x_("email", __.String),
+  PASSWORD: _x_("password", __.String),
+  FIRST_NAME: _x_("first_name", __.String),
+  LAST_NAME: _x_("last_name", __.String),
+  ROLE: _x_("role", __.String),
+  // STATUS: _x_("status", __.String),
+  // IMG_URL: _x_("img_url", __.String),
+  // IMG_POS: _x_("img_pos", __.String),
+  // IMG_SIZE: _x_("img_size", __.String),
+
+
+  // uni only
+  UNI_ID: _x_("uni_id", __.Int),
+
+  // rec only
+  COMPANY_ID: _x_("company_id", __.Int),
+  COMPANY_POSITION: _x_("company_position", __.String),
+
+
+  // // student only
+  // DESCRIPTION: "description",
+  // UNIVERSITY: "university",
+  // PHONE_NUMBER: "phone_number",
+  // GRADUATION_MONTH: "graduation_month",
+  // GRADUATION_YEAR: "graduation_year",
+  // AVAILABLE_MONTH: "available_month",
+  // AVAILABLE_YEAR: "available_year",
+  // SPONSOR: "sponsor",
+  // CGPA: "cgpa",
+  // STUDY_FIELD: "study_field",
+  // MAJOR: "major",
+  // MINOR: "minor",
+  // GENDER: "gender",
+  // DEGREE_LEVEL: "degree_level",
+  // RELOCATE: "relocate",
+  // STUDY_PLACE: "study_place",
+  // LOOKING_FOR: "looking_for",
+}
+const UserEnum = {
+  TABLE: "users",
+  GENDER_MALE: "Male",
+  GENDER_FEMALE: "Female",
+  ROLE_STUDENT: "student",
+  ROLE_RECRUITER: "recruiter",
+  ROLE_ADMIN: "administrator",
+  ROLE_EDITOR: "editor",
+  ROLE_ORGANIZER: "organizer",
+  ROLE_SUPPORT: "support",
+  STATUS_ACTIVE: "Active",
+  STATUS_INACTIVE: "Inactive",
+}
+
+
+//######################
+// ALL ATTRIBUTE
+module.exports = {
+  // helper functions
+  getAttr,
+  // entities
+  User,
+  UserEnum,
+  Company,
+  CompanyEnum,
+  // list of entities to used in model
+  Entities: {
+    company: {
+      table: CompanyEnum.TABLE,
+      id: "company_id",
+      isSingle: true,
+    },
+    user: {
+      table: UserEnum.TABLE,
+      id: "user_id",
+      isSingle: true,
+    }
+  },
+}
+
+
+// #############################################
+// #############################################
+// #############################################
+// #############################################
+// #############################################
+// #############################################
+// #############################################
+// #############################################
+// #############################################
 // #############################################
 // #############################################
 // CompanyAttr: {

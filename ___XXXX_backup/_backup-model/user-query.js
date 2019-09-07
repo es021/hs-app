@@ -386,7 +386,7 @@ class UserExec {
         const {
             ZoomExec
         } = require('./zoom-query.js');
-        const {
+        const { 
             SessionExec
         } = require('./session-query.js');
         const {

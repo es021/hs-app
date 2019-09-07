@@ -1,27 +1,15 @@
 
    
 <template>
-  <AppContainer :withBanner="true">
-    <h2>Home</h2>
-  </AppContainer>
+  <AppContainer :withBanner="true">Add Something</AppContainer>
 </template>
 
- <!-- <h3>Home</h3> -->
-    <!-- <LoaderCircular :loading="loading" size="small"></LoaderCircular>
-    {{user}}
-    <div class="container">
-      <div class="row">
-        <div class="col s12">
-          <div class="card-panel teal lighten-2">test</div>
-        </div>
-      </div>
-    </div>-->
-    
 <script>
 import * as ApiHelper from "../../_helper/api-helper";
+import * as ComponentHelper from "../helper/component-helper";
 
 export default {
-  name: "default",
+  name: "PageHome",
   data() {
     return {
       user: {},
@@ -30,19 +18,22 @@ export default {
   },
   created() {},
   mounted() {
-    // this.loading = true;
-    // ApiHelper.graphql(
-    //   `query{
-    //     user(ID:136){
-    //       ID user_email first_name last_name
-    //     }
-    //   }`
-    // ).then(data => {
-    //   this.user = data.user;
-    //   this.loading = false;
-    //   console.log(data);
-    // });
+    this.loading = true;
+    ApiHelper.graphql(
+      `query{
+        user(ID:1){
+          ID email first_name last_name
+          company {name slug ID}
+        }
+      }`
+    ).then(data => {
+      this.user = data.user;
+      this.loading = false;
+      this.X("data", data);
+    });
   },
-  methods: {}
+  methods: {
+    ...ComponentHelper.getMethods()
+  }
 };
 </script>

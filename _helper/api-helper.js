@@ -1,10 +1,10 @@
 const axios = require('axios');
 const {
-  AppConfig,
+  ApiUrl,
   StaticUrl
 } = require('../_config/app-config');
 const qs = require('qs');
-const graphQLUrl = AppConfig.Api + "/graphql?";
+const graphQLUrl = ApiUrl + "/graphql?";
 
 // add errMes in responseObj.response.data
 const rejectPromiseError = function (responseObj, errMes) {
@@ -145,14 +145,7 @@ function deleteAxios(requestUrl, headers) {
   return axios.delete(requestUrl, config);
 }
 
-function getPHPApiAxios(script, params) {
-  var requestUrl = AppConfig.PHPApi + `${script}.php`;
-  console.log(requestUrl);
-  var config = {
-    proxy: false
-  };
-  return axios.post(requestUrl, qs.stringify(params), config);
-}
+
 
 // only in ajax_external -- response is fixed here
 function getWpAjaxAxios(action, data, successInterceptor = null, isDataInPost = false) {
@@ -197,6 +190,5 @@ module.exports = {
   getStaticAxios,
   getAxiosGraphQLQuery,
   graphql,
-  getPHPApiAxios,
   getWpAjaxAxios
 };
