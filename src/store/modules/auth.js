@@ -5,23 +5,16 @@ import {
 function getStoreAuth() {
   // default state if not exist
   var state = {
+    isLoggedIn: true,
     user: {
-      "BRANCH_CODE": "16011011",
-      "PC_ID": "020",
-      "OPER_ID": "EJPN003",
-      "OPER_NAME": "OPER 2 PUNYA NAMA",
-      "KPT_NO": "930718115423",
-      "OPER_LVL4": "10110011",
-      "OPER_LVL8": "10110011",
-      "BRANCH_NAME":"DEV EJPN"
+      ID: 1
     },
-    login_time: 1526865746,
-    authenticated: true
+    loginTime: 1526865746,
   };
 
   try {
     var storeStr = localStorage.getItem(STORE_AUTH);
-    
+
     if (storeStr == "{}") {
       return state;
     }
@@ -41,10 +34,10 @@ function getStoreAuth() {
 }
 
 const state = getStoreAuth();
-console.log(state);
 // getters
 const getters = {
-  authState: state => state,
+  authIsLoggedIn: (state) => state.isLoggedIn,
+  authState: (state) => state,
   authUser: (state) => state.user
 }
 

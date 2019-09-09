@@ -9,13 +9,17 @@ import AppBanner from './components/AppBanner'
 import AppHeader from './components/AppHeader'
 import AppAlert from './components/AppAlert'
 import AppPopup from './components/AppPopup'
+import AppLeftBar from './components/AppLeftBar'
 import LoaderCircular from './components/LoaderCircular'
+import MenuList from './components/MenuList'
 
 Vue.component('AppContainer', AppContainer);
 Vue.component('AppBanner', AppBanner);
 Vue.component('AppHeader', AppHeader);
 Vue.component('AppPopup', AppPopup);
+Vue.component('AppLeftBar', AppLeftBar);
 Vue.component('AppAlert', AppAlert);
+Vue.component('MenuList', MenuList);
 Vue.component('LoaderCircular', LoaderCircular);
 
 
@@ -31,7 +35,7 @@ import 'materialize-css/dist/css/materialize.css'
 //   "alert", "nav-bar", "breadcrumb"
 // ];
 
-const scss = ["helper","header", "content"];
+const scss = ["helper", "content", "left-bar"];
 scss.map((d, i) => {
   require(`./style/${d}.scss`);
 })

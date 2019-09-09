@@ -1,7 +1,9 @@
 
    
 <template>
-  <AppContainer :withBanner="true">Add Something</AppContainer>
+  <AppContainer :withBanner="true">
+    This Is Home
+  </AppContainer>
 </template>
 
 <script>
@@ -18,19 +20,23 @@ export default {
   },
   created() {},
   mounted() {
-    this.loading = true;
-    ApiHelper.graphql(
-      `query{
-        user(ID:1){
-          ID email first_name last_name
-          company {name slug ID}
-        }
-      }`
-    ).then(data => {
-      this.user = data.user;
-      this.loading = false;
-      this.X("data", data);
-    });
+    this.X("authIsLoggedIn", this.authIsLoggedIn);
+    // this.loading = true;
+    // ApiHelper.graphql(
+    //   `query{
+    //     user(ID:1){
+    //       ID email first_name last_name
+    //       company {name slug ID}
+    //     }
+    //   }`
+    // ).then(data => {
+    //   this.user = data.user;
+    //   this.loading = false;
+    //   this.X("data", data);
+    // });
+  },
+  computed: {
+    ...ComponentHelper.getComputed()
   },
   methods: {
     ...ComponentHelper.getMethods()

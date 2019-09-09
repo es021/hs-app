@@ -1,6 +1,20 @@
+import {
+  mapGetters,
+  mapMutations
+} from "vuex";
+
+
+export function getComputed() {
+  return {
+    ...mapGetters(["authUser", "authIsLoggedIn"])
+  }
+}
+
 export function getMethods() {
   return {
+    ...mapMutations([]),
     X(x1 = "", x2 = "", x3 = "", x4 = "", x5 = "", x6 = "", x7 = "", x8 = "") {
+
       try {
         x1 = JSON.parse(JSON.stringify(x1))
       } catch (err) {}
