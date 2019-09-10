@@ -7,14 +7,16 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import * as ComponentHelper from "../helper/component-helper";
+
 export default {
   name: "AppLeftBar",
+  // import * as ComponentHelper from "../helper/component-helper";
   computed: {
-    ...mapGetters(["menuLeftBar"])
+    ...ComponentHelper.getComputed()
   },
   methods: {
-    //...mapMutations({ close: "popupClose" })
+    ...ComponentHelper.getMethods()
   }
 };
 </script>

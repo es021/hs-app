@@ -5,8 +5,10 @@ import {
 
 
 export function getComputed() {
+  let menu = ["menuHeader", "menuLeftBar"];
+  let auth = ["authUser", "authIsLoggedIn"];
   return {
-    ...mapGetters(["authUser", "authIsLoggedIn"])
+    ...mapGetters([...menu, ...auth])
   }
 }
 

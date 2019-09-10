@@ -1,76 +1,28 @@
 <template>
   <div id="AppHeader">
-    <div class="img">
-      <router-link :to="'/'" class="brand-logo">
-        <img src>
-      </router-link>
-    </div>
-    <div class="title">
-      <b>{{AppConfig.AppName.toUpperCase()}}</b>
-      <br>
-      <small>{{AppConfig.AppDesc}}</small>
-    </div>
-    <div class="menu">
-      <ul>
-        <span v-for="(d,i) in menuHeader" :key="`menu_${i}`">
-          <li class="title" v-if="d.isTitle">{{d.label}}</li>
-          <router-link v-else :to="d.path">
-            <li class="link">
-              <i :className="`fa fa-${d.icon} left`"/>
-              <span class="menu_label">{{d.label}}</span>
-              <div class="menu_count">{{d.count}}</div>
-            </li>
-          </router-link>
-        </span>
-      </ul>
-    </div>
-    <div class="menu-small">
-      <ButtonIcon size="lg" icon="bars"/>
-      <ul>
-        <span v-for="(d,i) in menuHeader" :key="`menu_${i}`">
-          <li class="title" v-if="d.isTitle">{{d.label}}</li>
-          <router-link v-else :to="d.path">
-            <li class="link">
-              <i :className="`fa fa-${d.icon} left`"/>
-              <span class="menu_label">{{d.label}}</span>
-              <div class="menu_count">{{d.count}}</div>
-            </li>
-          </router-link>
-        </span>
-      </ul>
-    </div>
-    {userIcon}
-    <!-- <nav>
-      <div class="nav-wrapper teal darken-3">
-        <div class="left" :style="{paddingLeft:'10px'}">
-          <router-link :to="'/'" class="brand-logo">
-            <i class="material-icons">widgets</i>
-            <b>{{AppConfig.AppName.toUpperCase()}}</b>
-          </router-link>
-        </div>
-
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+      <div class="img">
+        <router-link :to="'/'" class="brand-logo">
+          <img :src="AppConfig.getImgUploadUrl('favicon.ico')">
+        </router-link>
+      </div>
+      <div class="title">
+        <b>{{AppConfig.AppName.toUpperCase()}}</b>
+        <br>
+        <small>{{AppConfig.AppDesc}}</small>
+      </div>
+      <div class="menu hide-on-small-and-down">
+        <MenuList :iconStyle="{fontSize:'20px', marginRight:'5px'}"  
+          :data="menuHeader"></MenuList>
+      </div>
+      <div class="menu menu-toggle hide-on-med-and-up right-align">
+        <a @click="toogleSideMenu">
           <i class="material-icons">menu</i>
         </a>
-        <ul class="right hide-on-med-and-down">
-          <li v-for="(d,i) in items" :key="i">
-            <router-link :to="d.url">
-              <i class="material-icons left">{{d.icon}}</i>
-              {{d.label}}
-            </router-link>
-          </li>
-        </ul>
       </div>
-    </nav>-->
-
-    <ul class="sidenav" id="mobile-demo">
-      <li v-for="(d,i) in items" :key="i">
-        <router-link :to="d.url">
-          <i class="material-icons left">{{d.icon}}</i>
-          {{d.label}}
-        </router-link>
-      </li>
-    </ul>
+      <div :class="{'hide-on-med-and-up':true,'side-menu':true, 'show': isSideMenuShow}">
+          <MenuList :iconStyle="{fontSize:'20px', marginRight:'15px'}"  
+            :data="menuHeader"></MenuList>
+      </div>
   </div>
 </template>
 
@@ -81,111 +33,142 @@ import * as ComponentHelper from "../helper/component-helper";
 export default {
   data() {
     return {
-      AppConfig,
-      items: [
-        {
-          label: "Companies",
-          icon: "business",
-          url: "u-companies"
-        },
-        {
-          label: "Events",
-          icon: "mic",
-          url: "u-companies"
-        },
-        {
-          label: "Students",
-          icon: "people",
-          url: "u-companies"
-        }
-      ]
+      isSideMenuShow: false,
+      AppConfig
     };
   },
   name: "default",
-  props: {
-    // loggedIn: {
-    //   type: Boolean,
-    //   default: true
-    // }
-  },
+  props: {},
   computed: {
     ...ComponentHelper.getComputed()
   },
   methods: {
-    ...ComponentHelper.getMethods()
+    ...ComponentHelper.getMethods(),
+    toogleSideMenu() {
+      this.isSideMenuShow = !this.isSideMenuShow;
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../style/define/_constant.scss";
 @import "../style/define/_mixin.scss";
+$SIDE_MENU_WIDTH: 200px;
 
 #AppHeader {
-  width: 100%;
-  @include flex;
-  @include flex-align(center);
   height: 100%;
-  padding: 10px 0px;
-
-  margin-bottom: 0px;
-  background: white;
   text-align: left;
-  justify-content: space-between;
-  //border-bottom: solid 2px #ccc8c8;
-  box-shadow: 1px 4px 5px -3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5); // logo
 
-  .h-left {
-    @include flex;
-    @include flex-align(center);
-    img.logo {
+  .img {
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 2px;
+    padding: 2px;
+
+    img {
       height: 100%;
     }
-    .title {
-      // font-family: 'Jockey One';
-      // text-transform: uppercase;
-      // letter-spacing: 1px;
-      text-decoration: none;
-      font-size: 25px;
-      line-height: 20px;
-      font-weight: bold;
-      color: $COLOR-BLUE;
-    }
-    .subtitle {
-      font-size: 17px;
-      opacity: 0.8;
-    }
-    .title,
-    img.logo {
-      cursor: pointer;
-    }
-    .title:hover,
-    img.logo:hover {
-      opacity: 0.7;
-    }
-    .title:active,
-    img.logo:active {
-      opacity: 1;
-    }
   }
-  .h-right {
+
+  .title {
+    color: $COLOR_HEADER_TITLE;
     line-height: 15px;
-    margin-right: 10px;
+
+    small {
+      color: $COLOR_HEADER_SUBTITLE;
+    }
   }
 
-  .user-info {
-    text-align: right;
+  .menu_count {
+    color: white;
+    background: #f62626;
+    font-size: 10px;
+    border-radius: 100%;
+    margin-left: 5px;
+    height: 20px;
+    width: 20px;
+    font-weight: bold;
+    text-align: center;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1px;
+  }
 
-    div {
-      margin-bottom: 5px;
+  .menu,
+  .side-menu {
+    flex-grow: 2;
+    padding: 0 10px;
+
+    ul {
+      margin: 0;
+      list-style: none;
+      padding: 0;
     }
 
-    .ui-name {
-      font-size: 15px;
-      font-weight: bold;
-      color: $COLOR-BLUE;
+    a {
+      color: $COLOR_HEADER_LINK;
+      text-decoration: none;
     }
 
+    a:hover {
+      text-decoration: none;
+      color: $COLOR_HEADER_LINK_ACTIVE;
+    }
+  }
+
+  .menu {
+    ul {
+      display: flex;
+      align-items: center;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+
+      .menu-item {
+        margin-left: 20px;
+        .active {
+          //border-bottom: $COLOR_HEADER_LINK solid 2px;
+          font-weight: bold;
+          color: $COLOR_HEADER_LINK_ACTIVE;
+        }
+      }
+    }
+  }
+
+  .menu-toggle {
+    cursor: pointer;
+  }
+
+  .side-menu {
+    position: absolute;
+    right: 0;
+
+    ul {
+      position: absolute;
+      right: -$SIDE_MENU_WIDTH;
+      width: $SIDE_MENU_WIDTH;
+      transition: right 0.2s ease-out;
+      height: 100vh;
+      background: $COLOR_HEADER;
+      top: 25px;
+      padding: 10px;
+
+      .menu-item {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .side-menu.show {
+    ul {
+      right: 0;
+    }
   }
 }
 </style>

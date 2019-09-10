@@ -1,15 +1,15 @@
 <template>
   <ul>
-    <span v-for="(d,i) in data" :key="`menu_${i}`">
+    <div class="menu-item" v-for="(d,i) in data" :key="`menu_${i}`">
       <li class="title" v-if="d.isTitle">{{d.label}}</li>
       <router-link v-else :to="d.path">
         <li class="link">
-          <i :className="`fa fa-${d.icon} left`"/>
+          <i v-if="d.icon" :style="iconStyle" class="material-icons left">{{d.icon}}</i>
           <span class="menu_label">{{d.label}}</span>
           <div v-if="d.count" class="menu_count">{{d.count}}</div>
         </li>
       </router-link>
-    </span>
+    </div>
   </ul>
 </template>
 
@@ -22,6 +22,12 @@ export default {
   },
   name: "MenuList",
   props: {
+    iconStyle: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
     data: {
       type: Array,
       default: () => {

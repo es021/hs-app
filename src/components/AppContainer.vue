@@ -46,6 +46,7 @@ export default {
   },
   mounted() {},
   created() {},
+  // import * as ComponentHelper from "../helper/component-helper";
   computed: {
     ...ComponentHelper.getComputed()
   },

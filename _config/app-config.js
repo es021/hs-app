@@ -1,5 +1,7 @@
-const AppName = "Kabel Kita";
-const AppDesc = "Benda Boleh Setel";
+const AppName = "App Name";
+const AppDesc = "App Description";
+// const AppName = "Kabel Kita";
+// const AppDesc = "Benda Boleh Setel";
 const isProd = (process.env.NODE_ENV === "production"); // that is deployed to server
 const ServerPortDev = "7000";
 const SiteUrl = (isProd) ? `https://seedsjobfairapp.com/cf` : `http://localhost:${ServerPortDev}`;
