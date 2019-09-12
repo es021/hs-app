@@ -1,5 +1,5 @@
 <template>
-  <div id="AppHeader">
+  <div id="AppHeader" ref="AppHeader">
       <div class="img">
         <router-link :to="'/'" class="brand-logo">
           <img :src="AppConfig.getImgUploadUrl('favicon.ico')">
@@ -8,19 +8,27 @@
       <div class="title">
         <b>{{AppConfig.AppName.toUpperCase()}}</b>
         <br>
-        <small>{{AppConfig.AppDesc}}</small>
+        <small class="subtitle">{{AppConfig.AppDesc}}</small>
       </div>
       <div class="menu hide-on-small-and-down">
-        <MenuList :iconStyle="{fontSize:'20px', marginRight:'5px'}"  
+        <MenuList 
+          :onMouseoverLi="onMouseoverLi" 
+          :onMouseoutLi="onMouseoutLi" 
+          :iconStyle="{fontSize:'20px', marginRight:'5px'}"  
           :data="menuHeader"></MenuList>
       </div>
       <div class="menu menu-toggle hide-on-med-and-up right-align">
-        <a @click="toogleSideMenu">
+        <a @mouseover="onMouseoverLi" @mouseout="onMouseoutLi" 
+          class="menu-toggle-link" @click="toogleSideMenu">
           <i class="material-icons">menu</i>
         </a>
       </div>
       <div :class="{'hide-on-med-and-up':true,'side-menu':true, 'show': isSideMenuShow}">
-          <MenuList :iconStyle="{fontSize:'20px', marginRight:'15px'}"  
+          <div v-if="isSideMenuShow" class="side-menu-background" @click="toogleSideMenu"></div>
+          <MenuList 
+            :onMouseoverLi="onMouseoverLi" 
+            :onMouseoutLi="onMouseoutLi" 
+            :iconStyle="{fontSize:'20px', marginRight:'15px'}"  
             :data="menuHeader"></MenuList>
       </div>
   </div>
@@ -39,6 +47,9 @@ export default {
   },
   name: "default",
   props: {},
+  mounted() {
+    this.setTheme();
+  },
   computed: {
     ...ComponentHelper.getComputed()
   },
@@ -46,6 +57,29 @@ export default {
     ...ComponentHelper.getMethods(),
     toogleSideMenu() {
       this.isSideMenuShow = !this.isSideMenuShow;
+    },
+
+    // ########################################################################
+    // THEMEING HELPER
+    onMouseoverLi(e) {
+      this.setStyle(e.currentTarget, "color", this.themeAppHeader.link_active);
+    },
+    onMouseoutLi(e) {
+      this.setStyle(e.currentTarget, "color", this.themeAppHeader.link);
+    },
+    setTheme() {
+      let theme = this.themeAppHeader;
+
+      let main = this.$refs["AppHeader"];
+      this.setStyle(main, "background", theme.background);
+      this.setStyleByClass(main, "title", { color: theme.title });
+      this.setStyleByClass(main, "subtitle", { color: theme.subtitle });
+      this.setStyleByClass(main, "link", { color: theme.link });
+      this.setStyleByClass(main, "menu-toggle-link", { color: theme.link });
+      this.setStyleByClass(main, "active", { color: theme.link_active });
+
+      let sideMenu = main.getElementsByClassName("side-menu")[0];
+      this.setStyleByTag(sideMenu, "ul", { background: theme.background });
     }
   }
 };
@@ -57,6 +91,7 @@ export default {
 $SIDE_MENU_WIDTH: 200px;
 
 #AppHeader {
+  // (dynamic in setTheme) background: $COLOR_HEADER_BACKGROUND;
   height: 100%;
   text-align: left;
   display: flex;
@@ -76,11 +111,11 @@ $SIDE_MENU_WIDTH: 200px;
   }
 
   .title {
-    color: $COLOR_HEADER_TITLE;
+    // (dynamic in setTheme) color: $COLOR_HEADER_TITLE;
     line-height: 15px;
 
     small {
-      color: $COLOR_HEADER_SUBTITLE;
+      // (dynamic in setTheme) color: $COLOR_HEADER_SUBTITLE;
     }
   }
 
@@ -113,13 +148,13 @@ $SIDE_MENU_WIDTH: 200px;
     }
 
     a {
-      color: $COLOR_HEADER_LINK;
+      // (dynamic in setTheme) color: $COLOR_HEADER_LINK;
       text-decoration: none;
     }
 
     a:hover {
       text-decoration: none;
-      color: $COLOR_HEADER_LINK_ACTIVE;
+      // (dynamic in setTheme) color: $COLOR_HEADER_LINK_ACTIVE;
     }
   }
 
@@ -135,7 +170,7 @@ $SIDE_MENU_WIDTH: 200px;
         .active {
           //border-bottom: $COLOR_HEADER_LINK solid 2px;
           font-weight: bold;
-          color: $COLOR_HEADER_LINK_ACTIVE;
+          //color: $COLOR_HEADER_LINK_ACTIVE;
         }
       }
     }
@@ -146,6 +181,15 @@ $SIDE_MENU_WIDTH: 200px;
   }
 
   .side-menu {
+    .side-menu-background {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
     position: absolute;
     right: 0;
 
@@ -155,8 +199,9 @@ $SIDE_MENU_WIDTH: 200px;
       width: $SIDE_MENU_WIDTH;
       transition: right 0.2s ease-out;
       height: 100vh;
-      background: $COLOR_HEADER;
-      top: 25px;
+      // background: $COLOR_HEADER;
+      // (dynamic in setTheme) background: $COLOR_HEADER_BACKGROUND;
+      top: -25px;
       padding: 10px;
 
       .menu-item {

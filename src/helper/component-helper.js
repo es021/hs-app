@@ -5,16 +5,45 @@ import {
 
 
 export function getComputed() {
+  let theme = ["themeAppHeader", "themeAppLeftBar"];
   let menu = ["menuHeader", "menuLeftBar"];
   let auth = ["authUser", "authIsLoggedIn"];
   return {
-    ...mapGetters([...menu, ...auth])
+    ...mapGetters([...theme, ...menu, ...auth])
   }
 }
 
 export function getMethods() {
+  let theme = [""];
+  let menu = [""];
+  let auth = [""];
   return {
-    ...mapMutations([]),
+    ...mapMutations([...theme, ...menu, ...auth]),
+    setStyleByTag(parent, tagName, style) {
+      let els = parent.getElementsByTagName(tagName);
+      for (var k in style) {
+        this.setStyle(els, k, style[k]);
+      }
+    },
+    setStyleByClass(parent, className, style) {
+      let els = parent.getElementsByClassName(className);
+      for (var k in style) {
+        this.setStyle(els, k, style[k]);
+      }
+    },
+    setStyle(elements, key, value) {
+      if (typeof elements.length === "undefined") {
+        // convert HTMLElement to Array
+        elements = [elements];
+      } else {
+        // convert HTMLCollection to Array
+        elements = [...elements]
+      }
+
+      for (var i in elements) {
+        elements[i].style[key] = value;
+      }
+    },
     X(x1 = "", x2 = "", x3 = "", x4 = "", x5 = "", x6 = "", x7 = "", x8 = "") {
 
       try {

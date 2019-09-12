@@ -1,17 +1,17 @@
 const state = {
   header: [{
-      path: "/calendar",
-      label: "Calendar",
+      path: "/",
+      label: "Home",
+      icon: "home",
+    },
+    {
+      path: "/u-companies",
+      label: "Companies",
       icon: "business",
     },
     {
-      path: "/inbox",
-      label: "Inbox",
-      icon: "mic",
-    },
-    {
-      path: "/notification",
-      label: "Notification List",
+      path: "/u-events",
+      label: "Events",
       icon: "people",
     }
   ],

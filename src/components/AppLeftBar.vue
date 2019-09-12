@@ -1,7 +1,9 @@
 <template>
-  <div id="AppLeftBar">
+  <div id="AppLeftBar" ref="AppLeftBar">
     <div class="left-bar-nav">
-      <MenuList :data="menuLeftBar"></MenuList>
+      <MenuList :onMouseoverLi="onMouseoverLi" 
+        :onMouseoutLi="onMouseoutLi"  
+        :data="menuLeftBar"></MenuList>
     </div>
   </div>
 </template>
@@ -11,12 +13,48 @@ import * as ComponentHelper from "../helper/component-helper";
 
 export default {
   name: "AppLeftBar",
-  // import * as ComponentHelper from "../helper/component-helper";
   computed: {
     ...ComponentHelper.getComputed()
   },
+  data() {
+    return {};
+  },
+  mounted() {
+    this.setTheme();
+  },
   methods: {
-    ...ComponentHelper.getMethods()
+    ...ComponentHelper.getMethods(),
+
+    // ########################################################################
+    // THEMEING HELPER
+    onMouseoverLi(e) {
+      this.setStyle(
+        e.currentTarget,
+        "background",
+        this.themeAppLeftBar.link_active
+      );
+    },
+    onMouseoutLi(e) {
+      this.setStyle(
+        e.currentTarget,
+        "background",
+        this.themeAppLeftBar.background
+      );
+    },
+    setTheme() {
+      let theme = this.themeAppLeftBar;
+      let main = this.$refs["AppLeftBar"];
+      this.setStyle(main, "background", theme.background);
+      this.setStyleByClass(main, "link", { color: theme.link });
+      this.setStyleByClass(main, "active", { background: theme.link_active });
+      this.setStyleByClass(main, "title", {
+        color: theme.title
+      });
+      this.setStyleByClass(main, "menu_count", {
+        color: theme.count_color,
+        background: theme.count_background
+      });
+    }
   }
 };
 </script>
