@@ -1,7 +1,7 @@
 <template>
-  <div class="parallax-container" :style="{background:'rgba(0,0,0,0.4)'}">
-    <div class="parallax">
-      <img :src="AppConfig.getImgUploadUrl('banner.jpg')">
+  <div class="parallax-container" :style="style.container">
+    <div class="parallax" :style="style.parallax">
+      <!-- <img :src="AppConfig.getImgUploadUrl('banner.jpg')"> -->
     </div>
     <div class="white-text">
       <div class="container">
@@ -28,21 +28,36 @@
 </template>
 <script>
 import * as AppConfig from "../../_config/app-config";
+import * as ComponentHelper from "../helper/component-helper";
 export default {
   name: "default",
   props: {},
   data() {
     return {
-      AppConfig
+      AppConfig,
+      style: {
+        container: {},
+        parallax: {}
+      }
     };
   },
   computed: {
-    // ...mapGetters(["authUser"])
+    ...ComponentHelper.getComputed()
   },
-
   mounted() {
-    console.log("banner mount");
+    this.style.container = { background: "rgba(0,0,0,0.4)" };
+    this.style.parallax = {
+      ...this.getImgStyle({
+        url: AppConfig.getImgUploadUrl("banner.jpg"),
+        position: "center center",
+        size: "cover"
+      })
+    };
+    // AppConfig.getImgUploadUrl('banner.jpg')
+    // console.log("banner mount");
   },
-  methods: {}
+  methods: {
+    ...ComponentHelper.getMethods()
+  }
 };
 </script>

@@ -2,7 +2,7 @@
   <div id="AppHeader" ref="AppHeader">
       <div class="img">
         <router-link :to="'/'" class="brand-logo">
-          <img :src="AppConfig.getImgUploadUrl('favicon.ico')">
+          <img :src="AppConfig.getImgUploadUrl('logo.png')">
         </router-link>
       </div>
       <div class="title">
@@ -102,8 +102,8 @@ $SIDE_MENU_WIDTH: 200px;
   .img {
     height: 100%;
     margin-left: 10px;
-    margin-right: 2px;
-    padding: 2px;
+    margin-right: 7px;
+    padding: 7px 0px;
 
     img {
       height: 100%;

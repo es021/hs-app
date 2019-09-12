@@ -19,6 +19,21 @@ export function getMethods() {
   let auth = [""];
   return {
     ...mapMutations([...theme, ...menu, ...auth]),
+    getImgStyle({
+      url,
+      position,
+      size,
+      height,
+      width
+    }) {
+      let toRet = {
+        backgroundImage: `url("${url}")`,
+        backgroundSize: size,
+        backgroundPosition: position,
+      }
+      
+      return toRet;
+    },
     setStyleByTag(parent, tagName, style) {
       let els = parent.getElementsByTagName(tagName);
       for (var k in style) {

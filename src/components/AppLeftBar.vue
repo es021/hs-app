@@ -67,7 +67,7 @@ export default {
   // width: 200px;
   text-align: left;
   height: 100%;
-  background: rgb(15, 15, 15);
+  //background: rgb(15, 15, 15);
 
   .left-bar-nav {
     ul {
@@ -84,12 +84,12 @@ export default {
       }
       li.link {
         cursor: pointer;
-        color: white;
+        //color: white;
         display: flex;
         position: relative;
         .menu_count {
-          color: white;
-          background: #f62626;
+          // color: white;
+          // background: #f62626;
           font-size: 10px;
           border-radius: 100%;
           height: 15px;
@@ -116,11 +116,11 @@ export default {
 
     ul a.active li.link,
     ul li.link:hover {
-      background-color: blue;
+      //background-color: blue;
     }
 
     ul li.link:active {
-      background-color: darken(red, 5);
+      //background-color: darken(red, 5);
     }
   }
 }

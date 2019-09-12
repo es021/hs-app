@@ -12,14 +12,14 @@
 export default {
   name: "App",
   mounted() {},
-  watch: {
-    $route(to, from) {
-      // to reload parallax image
-      if (to.path == "/") {
-        location.reload();
-      }
-    }
-  },
+  // watch: {
+  //   $route(to, from) {
+  //     // to reload parallax image
+  //     if (to.path == "/") {
+  //       location.reload();
+  //     }
+  //   }
+  // },
   methods: {}
 };
 </script>

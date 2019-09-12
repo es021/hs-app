@@ -29,11 +29,11 @@ var routes = [{
     name: 'PageNotFound',
     component: PageNotFound
   },
-  // {
-  //   path: '/*',
-  //   name: 'PageNotFound',
-  //   component: PageNotFound
-  // }
+  {
+    path: '/*',
+    name: 'PageNotFound',
+    component: PageNotFound
+  }
 ]
 
 

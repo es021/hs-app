@@ -7,12 +7,12 @@ const state = {
     link_active: "#4c84ff",
   },
   AppLeftBar:{
-    background : "#bfc0c6",
-    link: "red",
-    link_active: "cyan",
-    title : "blue",
-    count_background : "yellow",
-    count_color : "green"
+    background : "rgb(19, 21, 53)",
+    link: "white",
+    link_active: "rgb(31, 54, 105)",
+    title : "grey",
+    count_background : "#f62626",
+    count_color : "white"
   }
 }
 
